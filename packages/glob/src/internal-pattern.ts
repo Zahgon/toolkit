@@ -67,71 +67,7 @@ export class Pattern {
     segments?: string[],
     homedir?: string
   ) {
-    // Pattern overload
-    let pattern: string
-    if (typeof patternOrNegate === 'string') {
-      pattern = patternOrNegate.trim()
-    }
-    // Segments overload
-    else {
-      // Convert to pattern
-      segments = segments || []
-      assert(segments.length, `Parameter 'segments' must not empty`)
-      const root = Pattern.getLiteral(segments[0])
-      assert(
-        root && pathHelper.hasAbsoluteRoot(root),
-        `Parameter 'segments' first element must be a root path`
-      )
-      pattern = new Path(segments).toString().trim()
-      if (patternOrNegate) {
-        pattern = `!${pattern}`
-      }
-    }
-
-    // Negate
-    while (pattern.startsWith('!')) {
-      this.negate = !this.negate
-      pattern = pattern.substr(1).trim()
-    }
-
-    // Normalize slashes and ensures absolute root
-    pattern = Pattern.fixupPattern(pattern, homedir)
-
-    // Segments
-    this.segments = new Path(pattern).segments
-
-    // Trailing slash indicates the pattern should only match directories, not regular files
-    this.trailingSeparator = pathHelper
-      .normalizeSeparators(pattern)
-      .endsWith(path.sep)
-    pattern = pathHelper.safeTrimTrailingSeparator(pattern)
-
-    // Search path (literal path prior to the first glob segment)
-    let foundGlob = false
-    const searchSegments = this.segments
-      .map(x => Pattern.getLiteral(x))
-      .filter(x => !foundGlob && !(foundGlob = x === ''))
-    this.searchPath = new Path(searchSegments).toString()
-
-    // Root RegExp (required when determining partial match)
-    this.rootRegExp = new RegExp(
-      Pattern.regExpEscape(searchSegments[0]),
-      IS_WINDOWS ? 'i' : ''
-    )
-
-    this.isImplicitPattern = isImplicitPattern
-
-    // Create minimatch
-    const minimatchOptions: MinimatchOptions = {
-      dot: true,
-      nobrace: true,
-      nocase: IS_WINDOWS,
-      nocomment: true,
-      noext: true,
-      nonegate: true
-    }
-    pattern = IS_WINDOWS ? pattern.replace(/\\/g, '/') : pattern
-    this.minimatch = new Minimatch(pattern, minimatchOptions)
+      throw new Error("STUB");
   }
 
   /**
@@ -168,102 +104,21 @@ export class Pattern {
    * Indicates whether the pattern may match descendants of the specified path
    */
   partialMatch(itemPath: string): boolean {
-    // Normalize slashes and trim unnecessary trailing slash
-    itemPath = pathHelper.safeTrimTrailingSeparator(itemPath)
-
-    // matchOne does not handle root path correctly
-    if (pathHelper.dirname(itemPath) === itemPath) {
-      return this.rootRegExp.test(itemPath)
-    }
-
-    return this.minimatch.matchOne(
-      itemPath.split(IS_WINDOWS ? /\\+/ : /\/+/),
-      this.minimatch.set[0],
-      true
-    )
+      throw new Error("STUB");
   }
 
   /**
    * Escapes glob patterns within a path
    */
   static globEscape(s: string): string {
-    return (IS_WINDOWS ? s : s.replace(/\\/g, '\\\\')) // escape '\' on Linux/macOS
-      .replace(/(\[)(?=[^/]+\])/g, '[[]') // escape '[' when ']' follows within the path segment
-      .replace(/\?/g, '[?]') // escape '?'
-      .replace(/\*/g, '[*]') // escape '*'
+      throw new Error("STUB");
   }
 
   /**
    * Normalizes slashes and ensures absolute root
    */
   private static fixupPattern(pattern: string, homedir?: string): string {
-    // Empty
-    assert(pattern, 'pattern cannot be empty')
-
-    // Must not contain `.` segment, unless first segment
-    // Must not contain `..` segment
-    const literalSegments = new Path(pattern).segments.map(x =>
-      Pattern.getLiteral(x)
-    )
-    assert(
-      literalSegments.every((x, i) => (x !== '.' || i === 0) && x !== '..'),
-      `Invalid pattern '${pattern}'. Relative pathing '.' and '..' is not allowed.`
-    )
-
-    // Must not contain globs in root, e.g. Windows UNC path \\foo\b*r
-    assert(
-      !pathHelper.hasRoot(pattern) || literalSegments[0],
-      `Invalid pattern '${pattern}'. Root segment must not contain globs.`
-    )
-
-    // Normalize slashes
-    pattern = pathHelper.normalizeSeparators(pattern)
-
-    // Replace leading `.` segment
-    if (pattern === '.' || pattern.startsWith(`.${path.sep}`)) {
-      pattern = Pattern.globEscape(process.cwd()) + pattern.substr(1)
-    }
-    // Replace leading `~` segment
-    else if (pattern === '~' || pattern.startsWith(`~${path.sep}`)) {
-      homedir = homedir || os.homedir()
-      assert(homedir, 'Unable to determine HOME directory')
-      assert(
-        pathHelper.hasAbsoluteRoot(homedir),
-        `Expected HOME directory to be a rooted path. Actual '${homedir}'`
-      )
-      pattern = Pattern.globEscape(homedir) + pattern.substr(1)
-    }
-    // Replace relative drive root, e.g. pattern is C: or C:foo
-    else if (
-      IS_WINDOWS &&
-      (pattern.match(/^[A-Z]:$/i) || pattern.match(/^[A-Z]:[^\\]/i))
-    ) {
-      let root = pathHelper.ensureAbsoluteRoot(
-        'C:\\dummy-root',
-        pattern.substr(0, 2)
-      )
-      if (pattern.length > 2 && !root.endsWith('\\')) {
-        root += '\\'
-      }
-      pattern = Pattern.globEscape(root) + pattern.substr(2)
-    }
-    // Replace relative root, e.g. pattern is \ or \foo
-    else if (IS_WINDOWS && (pattern === '\\' || pattern.match(/^\\[^\\]/))) {
-      let root = pathHelper.ensureAbsoluteRoot('C:\\dummy-root', '\\')
-      if (!root.endsWith('\\')) {
-        root += '\\'
-      }
-      pattern = Pattern.globEscape(root) + pattern.substr(1)
-    }
-    // Otherwise ensure absolute root
-    else {
-      pattern = pathHelper.ensureAbsoluteRoot(
-        Pattern.globEscape(process.cwd()),
-        pattern
-      )
-    }
-
-    return pathHelper.normalizeSeparators(pattern)
+      throw new Error("STUB");
   }
 
   /**
@@ -271,63 +126,7 @@ export class Pattern {
    * Otherwise returns empty string.
    */
   private static getLiteral(segment: string): string {
-    let literal = ''
-    for (let i = 0; i < segment.length; i++) {
-      const c = segment[i]
-      // Escape
-      if (c === '\\' && !IS_WINDOWS && i + 1 < segment.length) {
-        literal += segment[++i]
-        continue
-      }
-      // Wildcard
-      else if (c === '*' || c === '?') {
-        return ''
-      }
-      // Character set
-      else if (c === '[' && i + 1 < segment.length) {
-        let set = ''
-        let closed = -1
-        for (let i2 = i + 1; i2 < segment.length; i2++) {
-          const c2 = segment[i2]
-          // Escape
-          if (c2 === '\\' && !IS_WINDOWS && i2 + 1 < segment.length) {
-            set += segment[++i2]
-            continue
-          }
-          // Closed
-          else if (c2 === ']') {
-            closed = i2
-            break
-          }
-          // Otherwise
-          else {
-            set += c2
-          }
-        }
-
-        // Closed?
-        if (closed >= 0) {
-          // Cannot convert
-          if (set.length > 1) {
-            return ''
-          }
-
-          // Convert to literal
-          if (set) {
-            literal += set
-            i = closed
-            continue
-          }
-        }
-
-        // Otherwise fall thru
-      }
-
-      // Append
-      literal += c
-    }
-
-    return literal
+      throw new Error("STUB");
   }
 
   /**
@@ -335,6 +134,6 @@ export class Pattern {
    * https://javascript.info/regexp-escaping
    */
   private static regExpEscape(s: string): string {
-    return s.replace(/[[\\^$.|?*+()]/g, '\\$&')
+      throw new Error("STUB");
   }
 }

@@ -15,26 +15,15 @@ export function isSuccessStatusCode(statusCode?: number): boolean {
 }
 
 export function isServerErrorStatusCode(statusCode?: number): boolean {
-  if (!statusCode) {
-    return true
-  }
-  return statusCode >= 500
+    throw new Error("STUB");
 }
 
 export function isRetryableStatusCode(statusCode?: number): boolean {
-  if (!statusCode) {
-    return false
-  }
-  const retryableStatusCodes = [
-    HttpCodes.BadGateway,
-    HttpCodes.ServiceUnavailable,
-    HttpCodes.GatewayTimeout
-  ]
-  return retryableStatusCodes.includes(statusCode)
+    throw new Error("STUB");
 }
 
 async function sleep(milliseconds: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
+  return new Promise(resolve => { throw new Error("STUB"); })
 }
 
 export async function retry<T>(
@@ -45,52 +34,7 @@ export async function retry<T>(
   delay = DefaultRetryDelay,
   onError: ((arg0: Error) => T | undefined) | undefined = undefined
 ): Promise<T> {
-  let errorMessage = ''
-  let attempt = 1
-
-  while (attempt <= maxAttempts) {
-    let response: T | undefined = undefined
-    let statusCode: number | undefined = undefined
-    let isRetryable = false
-
-    try {
-      response = await method()
-    } catch (error) {
-      if (onError) {
-        response = onError(error)
-      }
-
-      isRetryable = true
-      errorMessage = error.message
-    }
-
-    if (response) {
-      statusCode = getStatusCode(response)
-
-      if (!isServerErrorStatusCode(statusCode)) {
-        return response
-      }
-    }
-
-    if (statusCode) {
-      isRetryable = isRetryableStatusCode(statusCode)
-      errorMessage = `Cache service responded with ${statusCode}`
-    }
-
-    core.debug(
-      `${name} - Attempt ${attempt} of ${maxAttempts} failed with error: ${errorMessage}`
-    )
-
-    if (!isRetryable) {
-      core.debug(`${name} - Error is not retryable`)
-      break
-    }
-
-    await sleep(delay)
-    attempt++
-  }
-
-  throw Error(`${name} failed: ${errorMessage}`)
+    throw new Error("STUB");
 }
 
 export async function retryTypedResponse<T>(
@@ -99,27 +43,7 @@ export async function retryTypedResponse<T>(
   maxAttempts = DefaultRetryAttempts,
   delay = DefaultRetryDelay
 ): Promise<ITypedResponseWithError<T>> {
-  return await retry(
-    name,
-    method,
-    (response: ITypedResponseWithError<T>) => response.statusCode,
-    maxAttempts,
-    delay,
-    // If the error object contains the statusCode property, extract it and return
-    // an TypedResponse<T> so it can be processed by the retry logic.
-    (error: Error) => {
-      if (error instanceof HttpClientError) {
-        return {
-          statusCode: error.statusCode,
-          result: null,
-          headers: {},
-          error
-        }
-      } else {
-        return undefined
-      }
-    }
-  )
+    throw new Error("STUB");
 }
 
 export async function retryHttpClientResponse(
@@ -128,11 +52,5 @@ export async function retryHttpClientResponse(
   maxAttempts = DefaultRetryAttempts,
   delay = DefaultRetryDelay
 ): Promise<HttpClientResponse> {
-  return await retry(
-    name,
-    method,
-    (response: HttpClientResponse) => response.message.statusCode,
-    maxAttempts,
-    delay
-  )
+    throw new Error("STUB");
 }

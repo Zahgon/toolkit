@@ -6,11 +6,7 @@ export function getProxyUrl(reqUrl: URL): URL | undefined {
   }
 
   const proxyVar = (() => {
-    if (usingSsl) {
-      return process.env['https_proxy'] || process.env['HTTPS_PROXY']
-    } else {
-      return process.env['http_proxy'] || process.env['HTTP_PROXY']
-    }
+      throw new Error("STUB");
   })()
 
   if (proxyVar) {
@@ -59,16 +55,13 @@ export function checkBypass(reqUrl: URL): boolean {
   // Compare request host against noproxy
   for (const upperNoProxyItem of noProxy
     .split(',')
-    .map(x => x.trim().toUpperCase())
-    .filter(x => x)) {
+    .map(x => { throw new Error("STUB"); })
+    .filter(x => { throw new Error("STUB"); })) {
     if (
       upperNoProxyItem === '*' ||
       upperReqHosts.some(
         x =>
-          x === upperNoProxyItem ||
-          x.endsWith(`.${upperNoProxyItem}`) ||
-          (upperNoProxyItem.startsWith('.') &&
-            x.endsWith(`${upperNoProxyItem}`))
+          { throw new Error("STUB"); }
       )
     ) {
       return true
@@ -99,10 +92,10 @@ class DecodedURL extends URL {
   }
 
   get username(): string {
-    return this._decodedUsername
+      throw new Error("STUB");
   }
 
   get password(): string {
-    return this._decodedPassword
+      throw new Error("STUB");
   }
 }

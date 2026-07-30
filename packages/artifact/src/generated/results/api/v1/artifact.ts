@@ -243,75 +243,19 @@ class CreateArtifactRequest$Type extends MessageType<CreateArtifactRequest> {
             { no: 1, name: "workflow_run_backend_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "workflow_job_run_backend_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "expires_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "expires_at", kind: "message", T: () => { throw new Error("STUB"); } },
             { no: 5, name: "version", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "mime_type", kind: "message", T: () => StringValue }
+            { no: 6, name: "mime_type", kind: "message", T: () => { throw new Error("STUB"); } }
         ]);
     }
     create(value?: PartialMessage<CreateArtifactRequest>): CreateArtifactRequest {
-        const message = { workflowRunBackendId: "", workflowJobRunBackendId: "", name: "", version: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<CreateArtifactRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateArtifactRequest): CreateArtifactRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string workflow_run_backend_id */ 1:
-                    message.workflowRunBackendId = reader.string();
-                    break;
-                case /* string workflow_job_run_backend_id */ 2:
-                    message.workflowJobRunBackendId = reader.string();
-                    break;
-                case /* string name */ 3:
-                    message.name = reader.string();
-                    break;
-                case /* google.protobuf.Timestamp expires_at */ 4:
-                    message.expiresAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.expiresAt);
-                    break;
-                case /* int32 version */ 5:
-                    message.version = reader.int32();
-                    break;
-                case /* google.protobuf.StringValue mime_type */ 6:
-                    message.mimeType = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.mimeType);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: CreateArtifactRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string workflow_run_backend_id = 1; */
-        if (message.workflowRunBackendId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.workflowRunBackendId);
-        /* string workflow_job_run_backend_id = 2; */
-        if (message.workflowJobRunBackendId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.workflowJobRunBackendId);
-        /* string name = 3; */
-        if (message.name !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.name);
-        /* google.protobuf.Timestamp expires_at = 4; */
-        if (message.expiresAt)
-            Timestamp.internalBinaryWrite(message.expiresAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* int32 version = 5; */
-        if (message.version !== 0)
-            writer.tag(5, WireType.Varint).int32(message.version);
-        /* google.protobuf.StringValue mime_type = 6; */
-        if (message.mimeType)
-            StringValue.internalBinaryWrite(message.mimeType, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -327,45 +271,13 @@ class CreateArtifactResponse$Type extends MessageType<CreateArtifactResponse> {
         ]);
     }
     create(value?: PartialMessage<CreateArtifactResponse>): CreateArtifactResponse {
-        const message = { ok: false, signedUploadUrl: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<CreateArtifactResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateArtifactResponse): CreateArtifactResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ok */ 1:
-                    message.ok = reader.bool();
-                    break;
-                case /* string signed_upload_url */ 2:
-                    message.signedUploadUrl = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: CreateArtifactResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ok = 1; */
-        if (message.ok !== false)
-            writer.tag(1, WireType.Varint).bool(message.ok);
-        /* string signed_upload_url = 2; */
-        if (message.signedUploadUrl !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.signedUploadUrl);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -380,67 +292,17 @@ class FinalizeArtifactRequest$Type extends MessageType<FinalizeArtifactRequest> 
             { no: 2, name: "workflow_job_run_backend_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "size", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 5, name: "hash", kind: "message", T: () => StringValue }
+            { no: 5, name: "hash", kind: "message", T: () => { throw new Error("STUB"); } }
         ]);
     }
     create(value?: PartialMessage<FinalizeArtifactRequest>): FinalizeArtifactRequest {
-        const message = { workflowRunBackendId: "", workflowJobRunBackendId: "", name: "", size: "0" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<FinalizeArtifactRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FinalizeArtifactRequest): FinalizeArtifactRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string workflow_run_backend_id */ 1:
-                    message.workflowRunBackendId = reader.string();
-                    break;
-                case /* string workflow_job_run_backend_id */ 2:
-                    message.workflowJobRunBackendId = reader.string();
-                    break;
-                case /* string name */ 3:
-                    message.name = reader.string();
-                    break;
-                case /* int64 size */ 4:
-                    message.size = reader.int64().toString();
-                    break;
-                case /* google.protobuf.StringValue hash */ 5:
-                    message.hash = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.hash);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: FinalizeArtifactRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string workflow_run_backend_id = 1; */
-        if (message.workflowRunBackendId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.workflowRunBackendId);
-        /* string workflow_job_run_backend_id = 2; */
-        if (message.workflowJobRunBackendId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.workflowJobRunBackendId);
-        /* string name = 3; */
-        if (message.name !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.name);
-        /* int64 size = 4; */
-        if (message.size !== "0")
-            writer.tag(4, WireType.Varint).int64(message.size);
-        /* google.protobuf.StringValue hash = 5; */
-        if (message.hash)
-            StringValue.internalBinaryWrite(message.hash, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -456,45 +318,13 @@ class FinalizeArtifactResponse$Type extends MessageType<FinalizeArtifactResponse
         ]);
     }
     create(value?: PartialMessage<FinalizeArtifactResponse>): FinalizeArtifactResponse {
-        const message = { ok: false, artifactId: "0" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<FinalizeArtifactResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FinalizeArtifactResponse): FinalizeArtifactResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ok */ 1:
-                    message.ok = reader.bool();
-                    break;
-                case /* int64 artifact_id */ 2:
-                    message.artifactId = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: FinalizeArtifactResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ok = 1; */
-        if (message.ok !== false)
-            writer.tag(1, WireType.Varint).bool(message.ok);
-        /* int64 artifact_id = 2; */
-        if (message.artifactId !== "0")
-            writer.tag(2, WireType.Varint).int64(message.artifactId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -507,62 +337,18 @@ class ListArtifactsRequest$Type extends MessageType<ListArtifactsRequest> {
         super("github.actions.results.api.v1.ListArtifactsRequest", [
             { no: 1, name: "workflow_run_backend_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "workflow_job_run_backend_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "name_filter", kind: "message", T: () => StringValue },
-            { no: 4, name: "id_filter", kind: "message", T: () => Int64Value }
+            { no: 3, name: "name_filter", kind: "message", T: () => { throw new Error("STUB"); } },
+            { no: 4, name: "id_filter", kind: "message", T: () => { throw new Error("STUB"); } }
         ]);
     }
     create(value?: PartialMessage<ListArtifactsRequest>): ListArtifactsRequest {
-        const message = { workflowRunBackendId: "", workflowJobRunBackendId: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ListArtifactsRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListArtifactsRequest): ListArtifactsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string workflow_run_backend_id */ 1:
-                    message.workflowRunBackendId = reader.string();
-                    break;
-                case /* string workflow_job_run_backend_id */ 2:
-                    message.workflowJobRunBackendId = reader.string();
-                    break;
-                case /* google.protobuf.StringValue name_filter */ 3:
-                    message.nameFilter = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.nameFilter);
-                    break;
-                case /* google.protobuf.Int64Value id_filter */ 4:
-                    message.idFilter = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.idFilter);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: ListArtifactsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string workflow_run_backend_id = 1; */
-        if (message.workflowRunBackendId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.workflowRunBackendId);
-        /* string workflow_job_run_backend_id = 2; */
-        if (message.workflowJobRunBackendId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.workflowJobRunBackendId);
-        /* google.protobuf.StringValue name_filter = 3; */
-        if (message.nameFilter)
-            StringValue.internalBinaryWrite(message.nameFilter, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value id_filter = 4; */
-        if (message.idFilter)
-            Int64Value.internalBinaryWrite(message.idFilter, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -573,43 +359,17 @@ export const ListArtifactsRequest = new ListArtifactsRequest$Type();
 class ListArtifactsResponse$Type extends MessageType<ListArtifactsResponse> {
     constructor() {
         super("github.actions.results.api.v1.ListArtifactsResponse", [
-            { no: 1, name: "artifacts", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ListArtifactsResponse_MonolithArtifact }
+            { no: 1, name: "artifacts", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => { throw new Error("STUB"); } }
         ]);
     }
     create(value?: PartialMessage<ListArtifactsResponse>): ListArtifactsResponse {
-        const message = { artifacts: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ListArtifactsResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListArtifactsResponse): ListArtifactsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated github.actions.results.api.v1.ListArtifactsResponse.MonolithArtifact artifacts */ 1:
-                    message.artifacts.push(ListArtifactsResponse_MonolithArtifact.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: ListArtifactsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated github.actions.results.api.v1.ListArtifactsResponse.MonolithArtifact artifacts = 1; */
-        for (let i = 0; i < message.artifacts.length; i++)
-            ListArtifactsResponse_MonolithArtifact.internalBinaryWrite(message.artifacts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -625,80 +385,18 @@ class ListArtifactsResponse_MonolithArtifact$Type extends MessageType<ListArtifa
             { no: 3, name: "database_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
             { no: 4, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "size", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 6, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 7, name: "digest", kind: "message", T: () => StringValue }
+            { no: 6, name: "created_at", kind: "message", T: () => { throw new Error("STUB"); } },
+            { no: 7, name: "digest", kind: "message", T: () => { throw new Error("STUB"); } }
         ]);
     }
     create(value?: PartialMessage<ListArtifactsResponse_MonolithArtifact>): ListArtifactsResponse_MonolithArtifact {
-        const message = { workflowRunBackendId: "", workflowJobRunBackendId: "", databaseId: "0", name: "", size: "0" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ListArtifactsResponse_MonolithArtifact>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListArtifactsResponse_MonolithArtifact): ListArtifactsResponse_MonolithArtifact {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string workflow_run_backend_id */ 1:
-                    message.workflowRunBackendId = reader.string();
-                    break;
-                case /* string workflow_job_run_backend_id */ 2:
-                    message.workflowJobRunBackendId = reader.string();
-                    break;
-                case /* int64 database_id */ 3:
-                    message.databaseId = reader.int64().toString();
-                    break;
-                case /* string name */ 4:
-                    message.name = reader.string();
-                    break;
-                case /* int64 size */ 5:
-                    message.size = reader.int64().toString();
-                    break;
-                case /* google.protobuf.Timestamp created_at */ 6:
-                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
-                    break;
-                case /* google.protobuf.StringValue digest */ 7:
-                    message.digest = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.digest);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: ListArtifactsResponse_MonolithArtifact, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string workflow_run_backend_id = 1; */
-        if (message.workflowRunBackendId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.workflowRunBackendId);
-        /* string workflow_job_run_backend_id = 2; */
-        if (message.workflowJobRunBackendId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.workflowJobRunBackendId);
-        /* int64 database_id = 3; */
-        if (message.databaseId !== "0")
-            writer.tag(3, WireType.Varint).int64(message.databaseId);
-        /* string name = 4; */
-        if (message.name !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.name);
-        /* int64 size = 5; */
-        if (message.size !== "0")
-            writer.tag(5, WireType.Varint).int64(message.size);
-        /* google.protobuf.Timestamp created_at = 6; */
-        if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.StringValue digest = 7; */
-        if (message.digest)
-            StringValue.internalBinaryWrite(message.digest, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -715,51 +413,13 @@ class GetSignedArtifactURLRequest$Type extends MessageType<GetSignedArtifactURLR
         ]);
     }
     create(value?: PartialMessage<GetSignedArtifactURLRequest>): GetSignedArtifactURLRequest {
-        const message = { workflowRunBackendId: "", workflowJobRunBackendId: "", name: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetSignedArtifactURLRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetSignedArtifactURLRequest): GetSignedArtifactURLRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string workflow_run_backend_id */ 1:
-                    message.workflowRunBackendId = reader.string();
-                    break;
-                case /* string workflow_job_run_backend_id */ 2:
-                    message.workflowJobRunBackendId = reader.string();
-                    break;
-                case /* string name */ 3:
-                    message.name = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: GetSignedArtifactURLRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string workflow_run_backend_id = 1; */
-        if (message.workflowRunBackendId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.workflowRunBackendId);
-        /* string workflow_job_run_backend_id = 2; */
-        if (message.workflowJobRunBackendId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.workflowJobRunBackendId);
-        /* string name = 3; */
-        if (message.name !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.name);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -774,39 +434,13 @@ class GetSignedArtifactURLResponse$Type extends MessageType<GetSignedArtifactURL
         ]);
     }
     create(value?: PartialMessage<GetSignedArtifactURLResponse>): GetSignedArtifactURLResponse {
-        const message = { signedUrl: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetSignedArtifactURLResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetSignedArtifactURLResponse): GetSignedArtifactURLResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string signed_url */ 1:
-                    message.signedUrl = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: GetSignedArtifactURLResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string signed_url = 1; */
-        if (message.signedUrl !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.signedUrl);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -823,51 +457,13 @@ class DeleteArtifactRequest$Type extends MessageType<DeleteArtifactRequest> {
         ]);
     }
     create(value?: PartialMessage<DeleteArtifactRequest>): DeleteArtifactRequest {
-        const message = { workflowRunBackendId: "", workflowJobRunBackendId: "", name: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<DeleteArtifactRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteArtifactRequest): DeleteArtifactRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string workflow_run_backend_id */ 1:
-                    message.workflowRunBackendId = reader.string();
-                    break;
-                case /* string workflow_job_run_backend_id */ 2:
-                    message.workflowJobRunBackendId = reader.string();
-                    break;
-                case /* string name */ 3:
-                    message.name = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: DeleteArtifactRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string workflow_run_backend_id = 1; */
-        if (message.workflowRunBackendId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.workflowRunBackendId);
-        /* string workflow_job_run_backend_id = 2; */
-        if (message.workflowJobRunBackendId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.workflowJobRunBackendId);
-        /* string name = 3; */
-        if (message.name !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.name);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -883,45 +479,13 @@ class DeleteArtifactResponse$Type extends MessageType<DeleteArtifactResponse> {
         ]);
     }
     create(value?: PartialMessage<DeleteArtifactResponse>): DeleteArtifactResponse {
-        const message = { ok: false, artifactId: "0" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<DeleteArtifactResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteArtifactResponse): DeleteArtifactResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ok */ 1:
-                    message.ok = reader.bool();
-                    break;
-                case /* int64 artifact_id */ 2:
-                    message.artifactId = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: DeleteArtifactResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ok = 1; */
-        if (message.ok !== false)
-            writer.tag(1, WireType.Varint).bool(message.ok);
-        /* int64 artifact_id = 2; */
-        if (message.artifactId !== "0")
-            writer.tag(2, WireType.Varint).int64(message.artifactId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**

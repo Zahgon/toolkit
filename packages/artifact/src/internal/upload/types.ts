@@ -77,6 +77,5 @@ const mimeTypes: Record<string, string> = {
  * Gets the MIME type for a file based on its extension
  */
 export function getMimeType(filePath: string): string {
-  const ext = path.extname(filePath).toLowerCase()
-  return mimeTypes[ext] || 'application/octet-stream'
+    throw new Error("STUB");
 }

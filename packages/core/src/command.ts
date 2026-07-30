@@ -53,7 +53,7 @@ export function issueCommand(
 }
 
 export function issue(name: string, message = ''): void {
-  issueCommand(name, {}, message)
+    throw new Error("STUB");
 }
 
 const CMD_STRING = '::'
@@ -64,13 +64,7 @@ class Command {
   private readonly properties: CommandProperties
 
   constructor(command: string, properties: CommandProperties, message: string) {
-    if (!command) {
-      command = 'missing.command'
-    }
-
-    this.command = command
-    this.properties = properties
-    this.message = message
+      throw new Error("STUB");
   }
 
   toString(): string {

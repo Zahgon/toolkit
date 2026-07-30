@@ -17,15 +17,7 @@ const IS_WINDOWS = process.platform === 'win32'
  */
 export class ToolRunner extends events.EventEmitter {
   constructor(toolPath: string, args?: string[], options?: im.ExecOptions) {
-    super()
-
-    if (!toolPath) {
-      throw new Error("Parameter 'toolPath' cannot be null or empty.")
-    }
-
-    this.toolPath = toolPath
-    this.args = args || []
-    this.options = options || {}
+      throw new Error("STUB");
   }
 
   private toolPath: string
@@ -193,7 +185,7 @@ export class ToolRunner extends events.EventEmitter {
     ]
     let needsQuotes = false
     for (const char of arg) {
-      if (cmdSpecialChars.some(x => x === char)) {
+      if (cmdSpecialChars.some(x => { throw new Error("STUB"); })) {
         needsQuotes = true
         break
       }
@@ -411,136 +403,7 @@ export class ToolRunner extends events.EventEmitter {
     this.toolPath = await io.which(this.toolPath, true)
 
     return new Promise<number>(async (resolve, reject) => {
-      this._debug(`exec tool: ${this.toolPath}`)
-      this._debug('arguments:')
-      for (const arg of this.args) {
-        this._debug(`   ${arg}`)
-      }
-
-      const optionsNonNull = this._cloneExecOptions(this.options)
-      if (!optionsNonNull.silent && optionsNonNull.outStream) {
-        optionsNonNull.outStream.write(
-          this._getCommandString(optionsNonNull) + os.EOL
-        )
-      }
-
-      const state = new ExecState(optionsNonNull, this.toolPath)
-      state.on('debug', (message: string) => {
-        this._debug(message)
-      })
-
-      if (this.options.cwd && !(await ioUtil.exists(this.options.cwd))) {
-        return reject(new Error(`The cwd: ${this.options.cwd} does not exist!`))
-      }
-
-      const fileName = this._getSpawnFileName()
-      const cp = child.spawn(
-        fileName,
-        this._getSpawnArgs(optionsNonNull),
-        this._getSpawnOptions(this.options, fileName)
-      )
-
-      let stdbuffer = ''
-      if (cp.stdout) {
-        cp.stdout.on('data', (data: Buffer) => {
-          if (this.options.listeners && this.options.listeners.stdout) {
-            this.options.listeners.stdout(data)
-          }
-
-          if (!optionsNonNull.silent && optionsNonNull.outStream) {
-            optionsNonNull.outStream.write(data)
-          }
-
-          stdbuffer = this._processLineBuffer(
-            data,
-            stdbuffer,
-            (line: string) => {
-              if (this.options.listeners && this.options.listeners.stdline) {
-                this.options.listeners.stdline(line)
-              }
-            }
-          )
-        })
-      }
-
-      let errbuffer = ''
-      if (cp.stderr) {
-        cp.stderr.on('data', (data: Buffer) => {
-          state.processStderr = true
-          if (this.options.listeners && this.options.listeners.stderr) {
-            this.options.listeners.stderr(data)
-          }
-
-          if (
-            !optionsNonNull.silent &&
-            optionsNonNull.errStream &&
-            optionsNonNull.outStream
-          ) {
-            const s = optionsNonNull.failOnStdErr
-              ? optionsNonNull.errStream
-              : optionsNonNull.outStream
-            s.write(data)
-          }
-
-          errbuffer = this._processLineBuffer(
-            data,
-            errbuffer,
-            (line: string) => {
-              if (this.options.listeners && this.options.listeners.errline) {
-                this.options.listeners.errline(line)
-              }
-            }
-          )
-        })
-      }
-
-      cp.on('error', (err: Error) => {
-        state.processError = err.message
-        state.processExited = true
-        state.processClosed = true
-        state.CheckComplete()
-      })
-
-      cp.on('exit', (code: number) => {
-        state.processExitCode = code
-        state.processExited = true
-        this._debug(`Exit code ${code} received from tool '${this.toolPath}'`)
-        state.CheckComplete()
-      })
-
-      cp.on('close', (code: number) => {
-        state.processExitCode = code
-        state.processExited = true
-        state.processClosed = true
-        this._debug(`STDIO streams have closed for tool '${this.toolPath}'`)
-        state.CheckComplete()
-      })
-
-      state.on('done', (error: Error, exitCode: number) => {
-        if (stdbuffer.length > 0) {
-          this.emit('stdline', stdbuffer)
-        }
-
-        if (errbuffer.length > 0) {
-          this.emit('errline', errbuffer)
-        }
-
-        cp.removeAllListeners()
-
-        if (error) {
-          reject(error)
-        } else {
-          resolve(exitCode)
-        }
-      })
-
-      if (this.options.input) {
-        if (!cp.stdin) {
-          throw new Error('child process missing stdin')
-        }
-
-        cp.stdin.end(this.options.input)
-      }
+        throw new Error("STUB");
     })
   }
 }
@@ -610,17 +473,7 @@ export function argStringToArray(argString: string): string[] {
 
 class ExecState extends events.EventEmitter {
   constructor(options: im.ExecOptions, toolPath: string) {
-    super()
-
-    if (!toolPath) {
-      throw new Error('toolPath must not be empty')
-    }
-
-    this.options = options
-    this.toolPath = toolPath
-    if (options.delay) {
-      this.delay = options.delay
-    }
+      throw new Error("STUB");
   }
 
   processClosed = false // tracks whether the process has exited and stdio is closed
@@ -680,19 +533,6 @@ class ExecState extends events.EventEmitter {
   }
 
   private static HandleTimeout(state: ExecState): void {
-    if (state.done) {
-      return
-    }
-
-    if (!state.processClosed && state.processExited) {
-      const message = `The STDIO streams did not close within ${
-        state.delay / 1000
-      } seconds of the exit event from process '${
-        state.toolPath
-      }'. This may indicate a child process inherited the STDIO streams and has not yet exited.`
-      state._debug(message)
-    }
-
-    state._setResult()
+      throw new Error("STUB");
   }
 }

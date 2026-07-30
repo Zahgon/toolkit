@@ -30,53 +30,12 @@ const invalidArtifactNameCharacters = new Map<string, string>([
  * Validates the name of the artifact to check to make sure there are no illegal characters
  */
 export function validateArtifactName(name: string): void {
-  if (!name) {
-    throw new Error(`Provided artifact name input during validation is empty`)
-  }
-
-  for (const [
-    invalidCharacterKey,
-    errorMessageForCharacter
-  ] of invalidArtifactNameCharacters) {
-    if (name.includes(invalidCharacterKey)) {
-      throw new Error(
-        `The artifact name is not valid: ${name}. Contains the following character: ${errorMessageForCharacter}
-          
-Invalid characters include: ${Array.from(
-          invalidArtifactNameCharacters.values()
-        ).toString()}
-          
-These characters are not allowed in the artifact name due to limitations with certain file systems such as NTFS. To maintain file system agnostic behavior, these characters are intentionally not allowed to prevent potential problems with downloads on different file systems.`
-      )
-    }
-  }
-
-  info(`Artifact name is valid!`)
+    throw new Error("STUB");
 }
 
 /**
  * Validates file paths to check for any illegal characters that can cause problems on different file systems
  */
 export function validateFilePath(path: string): void {
-  if (!path) {
-    throw new Error(`Provided file path input during validation is empty`)
-  }
-
-  for (const [
-    invalidCharacterKey,
-    errorMessageForCharacter
-  ] of invalidArtifactFilePathCharacters) {
-    if (path.includes(invalidCharacterKey)) {
-      throw new Error(
-        `The path for one of the files in artifact is not valid: ${path}. Contains the following character: ${errorMessageForCharacter}
-          
-Invalid characters include: ${Array.from(
-          invalidArtifactFilePathCharacters.values()
-        ).toString()}
-          
-The following characters are not allowed in files that are uploaded due to limitations with certain file systems such as NTFS. To maintain file system agnostic behavior, these characters are intentionally not allowed to prevent potential problems with downloads on different file systems.
-          `
-      )
-    }
-  }
+    throw new Error("STUB");
 }

@@ -31,10 +31,7 @@ export function getProxyAgentDispatcher(
 export function getProxyFetch(destinationUrl): typeof fetch {
   const httpDispatcher = getProxyAgentDispatcher(destinationUrl)
   const proxyFetch: typeof fetch = async (url, opts) => {
-    return fetch(url, {
-      ...opts,
-      dispatcher: httpDispatcher
-    })
+      throw new Error("STUB");
   }
   return proxyFetch
 }

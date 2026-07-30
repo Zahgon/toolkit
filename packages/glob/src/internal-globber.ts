@@ -51,111 +51,15 @@ export class DefaultGlobber implements Globber {
   }
 
   getSearchPaths(): string[] {
-    // Return a copy
-    return this.searchPaths.slice()
+      throw new Error("STUB");
   }
 
   async glob(): Promise<string[]> {
-    const result: string[] = []
-    for await (const itemPath of this.globGenerator()) {
-      result.push(itemPath)
-    }
-    return result
+      throw new Error("STUB");
   }
 
   async *globGenerator(): AsyncGenerator<string, void> {
-    // Fill in defaults options
-    const options = globOptionsHelper.getOptions(this.options)
-    // Implicit descendants?
-    const patterns: Pattern[] = []
-    for (const pattern of this.patterns) {
-      patterns.push(pattern)
-      if (
-        options.implicitDescendants &&
-        (pattern.trailingSeparator ||
-          pattern.segments[pattern.segments.length - 1] !== '**')
-      ) {
-        patterns.push(
-          new Pattern(pattern.negate, true, pattern.segments.concat('**'))
-        )
-      }
-    }
-
-    // Push the search paths
-
-    const stack: SearchState[] = []
-    for (const searchPath of patternHelper.getSearchPaths(patterns)) {
-      core.debug(`Search path '${searchPath}'`)
-
-      // Exists?
-      try {
-        // Intentionally using lstat. Detection for broken symlink
-        // will be performed later (if following symlinks).
-        await fs.promises.lstat(searchPath)
-      } catch (err) {
-        if (err.code === 'ENOENT') {
-          continue
-        }
-        throw err
-      }
-
-      stack.unshift(new SearchState(searchPath, 1))
-    }
-
-    // Search
-    const traversalChain: string[] = [] // used to detect cycles
-    while (stack.length) {
-      // Pop
-      const item = stack.pop() as SearchState
-
-      // Match?
-      const match = patternHelper.match(patterns, item.path)
-      const partialMatch =
-        !!match || patternHelper.partialMatch(patterns, item.path)
-      if (!match && !partialMatch) {
-        continue
-      }
-
-      // Stat
-      const stats: fs.Stats | undefined = await DefaultGlobber.stat(
-        item,
-        options,
-        traversalChain
-      )
-
-      // Broken symlink, or symlink cycle detected, or no longer exists
-      if (!stats) {
-        continue
-      }
-
-      // Hidden file or directory?
-      if (options.excludeHiddenFiles && path.basename(item.path).match(/^\./)) {
-        continue
-      }
-
-      // Directory
-      if (stats.isDirectory()) {
-        // Matched
-        if (match & MatchKind.Directory && options.matchDirectories) {
-          yield item.path
-        }
-        // Descend?
-        else if (!partialMatch) {
-          continue
-        }
-
-        // Push the child items in reverse
-        const childLevel = item.level + 1
-        const childItems = (await fs.promises.readdir(item.path)).map(
-          x => new SearchState(path.join(item.path, x), childLevel)
-        )
-        stack.push(...childItems.reverse())
-      }
-      // File
-      else if (match & MatchKind.File) {
-        yield item.path
-      }
-    }
+      throw new Error("STUB");
   }
 
   /**
@@ -165,28 +69,7 @@ export class DefaultGlobber implements Globber {
     patterns: string,
     options?: GlobOptions
   ): Promise<DefaultGlobber> {
-    const result = new DefaultGlobber(options)
-
-    if (IS_WINDOWS) {
-      patterns = patterns.replace(/\r\n/g, '\n')
-      patterns = patterns.replace(/\r/g, '\n')
-    }
-
-    const lines = patterns.split('\n').map(x => x.trim())
-    for (const line of lines) {
-      // Empty or comment
-      if (!line || line.startsWith('#')) {
-        continue
-      }
-      // Pattern
-      else {
-        result.patterns.push(new Pattern(line))
-      }
-    }
-
-    result.searchPaths.push(...patternHelper.getSearchPaths(result.patterns))
-
-    return result
+      throw new Error("STUB");
   }
 
   private static async stat(
@@ -232,7 +115,7 @@ export class DefaultGlobber implements Globber {
       }
 
       // Test for a cycle
-      if (traversalChain.some((x: string) => x === realPath)) {
+      if (traversalChain.some((x: string) => { throw new Error("STUB"); })) {
         core.debug(
           `Symlink cycle detected for path '${item.path}' and realpath '${realPath}'`
         )

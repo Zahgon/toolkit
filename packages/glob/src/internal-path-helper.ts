@@ -45,71 +45,7 @@ export function dirname(p: string): string {
  * or `C:` are expanded based on the current working directory.
  */
 export function ensureAbsoluteRoot(root: string, itemPath: string): string {
-  assert(root, `ensureAbsoluteRoot parameter 'root' must not be empty`)
-  assert(itemPath, `ensureAbsoluteRoot parameter 'itemPath' must not be empty`)
-
-  // Already rooted
-  if (hasAbsoluteRoot(itemPath)) {
-    return itemPath
-  }
-
-  // Windows
-  if (IS_WINDOWS) {
-    // Check for itemPath like C: or C:foo
-    if (itemPath.match(/^[A-Z]:[^\\/]|^[A-Z]:$/i)) {
-      let cwd = process.cwd()
-      assert(
-        cwd.match(/^[A-Z]:\\/i),
-        `Expected current directory to start with an absolute drive root. Actual '${cwd}'`
-      )
-
-      // Drive letter matches cwd? Expand to cwd
-      if (itemPath[0].toUpperCase() === cwd[0].toUpperCase()) {
-        // Drive only, e.g. C:
-        if (itemPath.length === 2) {
-          // Preserve specified drive letter case (upper or lower)
-          return `${itemPath[0]}:\\${cwd.substr(3)}`
-        }
-        // Drive + path, e.g. C:foo
-        else {
-          if (!cwd.endsWith('\\')) {
-            cwd += '\\'
-          }
-          // Preserve specified drive letter case (upper or lower)
-          return `${itemPath[0]}:\\${cwd.substr(3)}${itemPath.substr(2)}`
-        }
-      }
-      // Different drive
-      else {
-        return `${itemPath[0]}:\\${itemPath.substr(2)}`
-      }
-    }
-    // Check for itemPath like \ or \foo
-    else if (normalizeSeparators(itemPath).match(/^\\$|^\\[^\\]/)) {
-      const cwd = process.cwd()
-      assert(
-        cwd.match(/^[A-Z]:\\/i),
-        `Expected current directory to start with an absolute drive root. Actual '${cwd}'`
-      )
-
-      return `${cwd[0]}:\\${itemPath.substr(1)}`
-    }
-  }
-
-  assert(
-    hasAbsoluteRoot(root),
-    `ensureAbsoluteRoot parameter 'root' must have an absolute root`
-  )
-
-  // Otherwise ensure root ends with a separator
-  if (root.endsWith('/') || (IS_WINDOWS && root.endsWith('\\'))) {
-    // Intentionally empty
-  } else {
-    // Append separator
-    root += path.sep
-  }
-
-  return root + itemPath
+    throw new Error("STUB");
 }
 
 /**
@@ -117,19 +53,7 @@ export function ensureAbsoluteRoot(root: string, itemPath: string): string {
  * `\\hello\share` and `C:\hello` (and using alternate separator).
  */
 export function hasAbsoluteRoot(itemPath: string): boolean {
-  assert(itemPath, `hasAbsoluteRoot parameter 'itemPath' must not be empty`)
-
-  // Normalize separators
-  itemPath = normalizeSeparators(itemPath)
-
-  // Windows
-  if (IS_WINDOWS) {
-    // E.g. \\hello\share or C:\hello
-    return itemPath.startsWith('\\\\') || /^[A-Z]:\\/i.test(itemPath)
-  }
-
-  // E.g. /hello
-  return itemPath.startsWith('/')
+    throw new Error("STUB");
 }
 
 /**
@@ -137,20 +61,7 @@ export function hasAbsoluteRoot(itemPath: string): boolean {
  * `\`, `\hello`, `\\hello\share`, `C:`, and `C:\hello` (and using alternate separator).
  */
 export function hasRoot(itemPath: string): boolean {
-  assert(itemPath, `isRooted parameter 'itemPath' must not be empty`)
-
-  // Normalize separators
-  itemPath = normalizeSeparators(itemPath)
-
-  // Windows
-  if (IS_WINDOWS) {
-    // E.g. \ or \hello or \\hello
-    // E.g. C: or C:\hello
-    return itemPath.startsWith('\\') || /^[A-Z]:/i.test(itemPath)
-  }
-
-  // E.g. /hello
-  return itemPath.startsWith('/')
+    throw new Error("STUB");
 }
 
 /**

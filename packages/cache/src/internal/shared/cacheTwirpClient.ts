@@ -38,21 +38,7 @@ class CacheServiceClient implements Rpc {
     baseRetryIntervalMilliseconds?: number,
     retryMultiplier?: number
   ) {
-    const token = getRuntimeToken()
-    this.baseUrl = getCacheServiceURL()
-    if (maxAttempts) {
-      this.maxAttempts = maxAttempts
-    }
-    if (baseRetryIntervalMilliseconds) {
-      this.baseRetryIntervalMilliseconds = baseRetryIntervalMilliseconds
-    }
-    if (retryMultiplier) {
-      this.retryMultiplier = retryMultiplier
-    }
-
-    this.httpClient = new HttpClient(userAgent, [
-      new BearerCredentialHandler(token)
-    ])
+      throw new Error("STUB");
   }
 
   // This function satisfies the Rpc interface. It is compatible with the JSON
@@ -70,7 +56,7 @@ class CacheServiceClient implements Rpc {
     }
     try {
       const {body} = await this.retryableRequest(async () =>
-        this.httpClient.post(url, JSON.stringify(data), headers)
+        { throw new Error("STUB"); }
       )
 
       return body
@@ -188,7 +174,7 @@ class CacheServiceClient implements Rpc {
   }
 
   async sleep(milliseconds: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
+    return new Promise(resolve => { throw new Error("STUB"); })
   }
 
   getExponentialRetryTimeMilliseconds(attempt: number): number {
@@ -214,11 +200,5 @@ export function internalCacheTwirpClient(options?: {
   retryIntervalMs?: number
   retryMultiplier?: number
 }): CacheServiceClientJSON {
-  const client = new CacheServiceClient(
-    getUserAgentString(),
-    options?.maxAttempts,
-    options?.retryIntervalMs,
-    options?.retryMultiplier
-  )
-  return new CacheServiceClientJSON(client)
+    throw new Error("STUB");
 }

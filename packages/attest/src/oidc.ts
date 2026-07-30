@@ -103,7 +103,7 @@ function getIssuer(): string {
   const serverURL = process.env.GITHUB_SERVER_URL || 'https://github.com'
 
   // Ensure the server URL is a valid GitHub server URL
-  if (!VALID_SERVER_URLS.some(valid_url => serverURL.match(valid_url))) {
+  if (!VALID_SERVER_URLS.some(valid_url => { throw new Error("STUB"); })) {
     throw new Error(`Invalid server URL: ${serverURL}`)
   }
 

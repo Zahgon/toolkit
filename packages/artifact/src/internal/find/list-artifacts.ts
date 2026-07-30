@@ -23,137 +23,13 @@ export async function listArtifactsPublic(
   token: string,
   latest = false
 ): Promise<ListArtifactsResponse> {
-  info(
-    `Fetching artifact list for workflow run ${workflowRunId} in repository ${repositoryOwner}/${repositoryName}`
-  )
-
-  let artifacts: Artifact[] = []
-  const [retryOpts, requestOpts] = getRetryOptions(defaultGitHubOptions)
-
-  const opts: OctokitOptions = {
-    log: undefined,
-    userAgent: getUserAgentString(),
-    previews: undefined,
-    retry: retryOpts,
-    request: requestOpts
-  }
-
-  const github = getOctokit(token, opts, retry, requestLog)
-
-  let currentPageNumber = 1
-
-  const {data: listArtifactResponse} = await github.request(
-    'GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts',
-    {
-      owner: repositoryOwner,
-      repo: repositoryName,
-      run_id: workflowRunId,
-      per_page: paginationCount,
-      page: currentPageNumber
-    }
-  )
-
-  let numberOfPages = Math.ceil(
-    listArtifactResponse.total_count / paginationCount
-  )
-  const totalArtifactCount = listArtifactResponse.total_count
-  if (totalArtifactCount > maximumArtifactCount) {
-    warning(
-      `Workflow run ${workflowRunId} has ${totalArtifactCount} artifacts, exceeding the limit of ${maximumArtifactCount}. Results will be incomplete as only the first ${maximumArtifactCount} artifacts will be returned`
-    )
-    numberOfPages = maxNumberOfPages
-  }
-
-  // Iterate over the first page
-  for (const artifact of listArtifactResponse.artifacts) {
-    artifacts.push({
-      name: artifact.name,
-      id: artifact.id,
-      size: artifact.size_in_bytes,
-      createdAt: artifact.created_at
-        ? new Date(artifact.created_at)
-        : undefined,
-      digest: (artifact as ArtifactResponse).digest
-    })
-  }
-  // Move to the next page
-  currentPageNumber++
-  // Iterate over any remaining pages
-  for (
-    currentPageNumber;
-    currentPageNumber <= numberOfPages;
-    currentPageNumber++
-  ) {
-    debug(`Fetching page ${currentPageNumber} of artifact list`)
-
-    const {data: listArtifactResponse} = await github.request(
-      'GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts',
-      {
-        owner: repositoryOwner,
-        repo: repositoryName,
-        run_id: workflowRunId,
-        per_page: paginationCount,
-        page: currentPageNumber
-      }
-    )
-
-    for (const artifact of listArtifactResponse.artifacts) {
-      artifacts.push({
-        name: artifact.name,
-        id: artifact.id,
-        size: artifact.size_in_bytes,
-        createdAt: artifact.created_at
-          ? new Date(artifact.created_at)
-          : undefined,
-        digest: (artifact as ArtifactResponse).digest
-      })
-    }
-  }
-
-  if (latest) {
-    artifacts = filterLatest(artifacts)
-  }
-
-  info(`Found ${artifacts.length} artifact(s)`)
-
-  return {
-    artifacts
-  }
+    throw new Error("STUB");
 }
 
 export async function listArtifactsInternal(
   latest = false
 ): Promise<ListArtifactsResponse> {
-  const artifactClient = internalArtifactTwirpClient()
-
-  const {workflowRunBackendId, workflowJobRunBackendId} =
-    getBackendIdsFromToken()
-
-  const req: ListArtifactsRequest = {
-    workflowRunBackendId,
-    workflowJobRunBackendId
-  }
-
-  const res = await artifactClient.ListArtifacts(req)
-  let artifacts: Artifact[] = res.artifacts.map(artifact => ({
-    name: artifact.name,
-    id: Number(artifact.databaseId),
-    size: Number(artifact.size),
-    createdAt: artifact.createdAt
-      ? Timestamp.toDate(artifact.createdAt)
-      : undefined,
-    digest: artifact.digest?.value
-  }))
-
-  if (latest) {
-    artifacts = filterLatest(artifacts)
-  }
-
-  info(`Found ${artifacts.length} artifact(s)`)
-
-  return {
-    artifacts
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -174,14 +50,5 @@ interface ArtifactResponse {
  * @returns The filtered list of artifacts
  */
 function filterLatest(artifacts: Artifact[]): Artifact[] {
-  artifacts.sort((a, b) => b.id - a.id)
-  const latestArtifacts: Artifact[] = []
-  const seenArtifactNames = new Set<string>()
-  for (const artifact of artifacts) {
-    if (!seenArtifactNames.has(artifact.name)) {
-      latestArtifacts.push(artifact)
-      seenArtifactNames.add(artifact.name)
-    }
-  }
-  return latestArtifacts
+    throw new Error("STUB");
 }

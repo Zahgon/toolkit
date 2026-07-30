@@ -199,51 +199,22 @@ class DoubleValue$Type extends MessageType<DoubleValue> {
      * Encode `DoubleValue` to JSON number.
      */
     internalJsonWrite(message: DoubleValue, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(2, message.value, "value", false, true);
+        throw new Error("STUB");
     }
     /**
      * Decode `DoubleValue` from JSON number.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: DoubleValue): DoubleValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 1, undefined, "value") as number;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<DoubleValue>): DoubleValue {
-        const message = { value: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<DoubleValue>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DoubleValue): DoubleValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* double value */ 1:
-                    message.value = reader.double();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: DoubleValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* double value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Bit64).double(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -261,51 +232,22 @@ class FloatValue$Type extends MessageType<FloatValue> {
      * Encode `FloatValue` to JSON number.
      */
     internalJsonWrite(message: FloatValue, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(1, message.value, "value", false, true);
+        throw new Error("STUB");
     }
     /**
      * Decode `FloatValue` from JSON number.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: FloatValue): FloatValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 1, undefined, "value") as number;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<FloatValue>): FloatValue {
-        const message = { value: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<FloatValue>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FloatValue): FloatValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* float value */ 1:
-                    message.value = reader.float();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: FloatValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* float value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Bit32).float(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -323,51 +265,22 @@ class Int64Value$Type extends MessageType<Int64Value> {
      * Encode `Int64Value` to JSON string.
      */
     internalJsonWrite(message: Int64Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(ScalarType.INT64, message.value, "value", false, true);
+        throw new Error("STUB");
     }
     /**
      * Decode `Int64Value` from JSON string.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: Int64Value): Int64Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, ScalarType.INT64, LongType.STRING, "value") as any;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<Int64Value>): Int64Value {
-        const message = { value: "0" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<Int64Value>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Int64Value): Int64Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 value */ 1:
-                    message.value = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: Int64Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 value = 1; */
-        if (message.value !== "0")
-            writer.tag(1, WireType.Varint).int64(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -385,51 +298,22 @@ class UInt64Value$Type extends MessageType<UInt64Value> {
      * Encode `UInt64Value` to JSON string.
      */
     internalJsonWrite(message: UInt64Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(ScalarType.UINT64, message.value, "value", false, true);
+        throw new Error("STUB");
     }
     /**
      * Decode `UInt64Value` from JSON string.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: UInt64Value): UInt64Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, ScalarType.UINT64, LongType.STRING, "value") as any;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<UInt64Value>): UInt64Value {
-        const message = { value: "0" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<UInt64Value>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UInt64Value): UInt64Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint64 value */ 1:
-                    message.value = reader.uint64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: UInt64Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 value = 1; */
-        if (message.value !== "0")
-            writer.tag(1, WireType.Varint).uint64(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -447,51 +331,22 @@ class Int32Value$Type extends MessageType<Int32Value> {
      * Encode `Int32Value` to JSON string.
      */
     internalJsonWrite(message: Int32Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(5, message.value, "value", false, true);
+        throw new Error("STUB");
     }
     /**
      * Decode `Int32Value` from JSON string.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: Int32Value): Int32Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 5, undefined, "value") as number;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<Int32Value>): Int32Value {
-        const message = { value: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<Int32Value>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Int32Value): Int32Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int32 value */ 1:
-                    message.value = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: Int32Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Varint).int32(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -509,51 +364,22 @@ class UInt32Value$Type extends MessageType<UInt32Value> {
      * Encode `UInt32Value` to JSON string.
      */
     internalJsonWrite(message: UInt32Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(13, message.value, "value", false, true);
+        throw new Error("STUB");
     }
     /**
      * Decode `UInt32Value` from JSON string.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: UInt32Value): UInt32Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 13, undefined, "value") as number;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<UInt32Value>): UInt32Value {
-        const message = { value: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<UInt32Value>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UInt32Value): UInt32Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint32 value */ 1:
-                    message.value = reader.uint32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: UInt32Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint32 value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Varint).uint32(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -571,51 +397,22 @@ class BoolValue$Type extends MessageType<BoolValue> {
      * Encode `BoolValue` to JSON bool.
      */
     internalJsonWrite(message: BoolValue, options: JsonWriteOptions): JsonValue {
-        return message.value;
+        throw new Error("STUB");
     }
     /**
      * Decode `BoolValue` from JSON bool.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: BoolValue): BoolValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 8, undefined, "value") as boolean;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<BoolValue>): BoolValue {
-        const message = { value: false };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<BoolValue>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BoolValue): BoolValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool value */ 1:
-                    message.value = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: BoolValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool value = 1; */
-        if (message.value !== false)
-            writer.tag(1, WireType.Varint).bool(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -633,51 +430,22 @@ class StringValue$Type extends MessageType<StringValue> {
      * Encode `StringValue` to JSON string.
      */
     internalJsonWrite(message: StringValue, options: JsonWriteOptions): JsonValue {
-        return message.value;
+        throw new Error("STUB");
     }
     /**
      * Decode `StringValue` from JSON string.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: StringValue): StringValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 9, undefined, "value") as string;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<StringValue>): StringValue {
-        const message = { value: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<StringValue>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StringValue): StringValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string value */ 1:
-                    message.value = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: StringValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string value = 1; */
-        if (message.value !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -695,51 +463,22 @@ class BytesValue$Type extends MessageType<BytesValue> {
      * Encode `BytesValue` to JSON string.
      */
     internalJsonWrite(message: BytesValue, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(12, message.value, "value", false, true);
+        throw new Error("STUB");
     }
     /**
      * Decode `BytesValue` from JSON string.
      */
     internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: BytesValue): BytesValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 12, undefined, "value") as Uint8Array;
-        return target;
+        throw new Error("STUB");
     }
     create(value?: PartialMessage<BytesValue>): BytesValue {
-        const message = { value: new Uint8Array(0) };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<BytesValue>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BytesValue): BytesValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bytes value */ 1:
-                    message.value = reader.bytes();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: BytesValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bytes value = 1; */
-        if (message.value.length)
-            writer.tag(1, WireType.LengthDelimited).bytes(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**

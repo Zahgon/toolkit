@@ -30,15 +30,7 @@ export const IS_WINDOWS = process.platform === 'win32'
  * backslash to all junction results on Windows.
  */
 export async function readlink(fsPath: string): Promise<string> {
-  const result = await fs.promises.readlink(fsPath)
-
-  // On Windows, restore Node 20 behavior: add trailing backslash to all results
-  // since junctions on Windows are always directory links
-  if (IS_WINDOWS && !result.endsWith('\\')) {
-    return `${result}\\`
-  }
-
-  return result
+    throw new Error("STUB");
 }
 
 // See https://github.com/nodejs/node/blob/d0153aee367422d0858105abec186da4dff0a0c5/deps/uv/include/uv/win.h#L691
@@ -112,7 +104,7 @@ export async function tryGetExecutablePath(
     if (IS_WINDOWS) {
       // on Windows, test for valid extension
       const upperExt = path.extname(filePath).toUpperCase()
-      if (extensions.some(validExt => validExt.toUpperCase() === upperExt)) {
+      if (extensions.some(validExt => { throw new Error("STUB"); })) {
         return filePath
       }
     } else {
@@ -201,5 +193,5 @@ function isUnixExecutable(stats: fs.Stats): boolean {
 
 // Get the path of cmd.exe in windows
 export function getCmdPath(): string {
-  return process.env['COMSPEC'] ?? `cmd.exe`
+    throw new Error("STUB");
 }

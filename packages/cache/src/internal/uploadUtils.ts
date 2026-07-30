@@ -32,21 +32,21 @@ export class UploadProgress {
    * @param sentBytes the number of bytes sent
    */
   setSentBytes(sentBytes: number): void {
-    this.sentBytes = sentBytes
+      throw new Error("STUB");
   }
 
   /**
    * Returns the total number of bytes transferred.
    */
   getTransferredBytes(): number {
-    return this.sentBytes
+      throw new Error("STUB");
   }
 
   /**
    * Returns true if the upload is complete.
    */
   isDone(): boolean {
-    return this.getTransferredBytes() === this.contentLength
+      throw new Error("STUB");
   }
 
   /**
@@ -54,37 +54,14 @@ export class UploadProgress {
    * last line and then stop.
    */
   display(): void {
-    if (this.displayedComplete) {
-      return
-    }
-
-    const transferredBytes = this.sentBytes
-    const percentage = (100 * (transferredBytes / this.contentLength)).toFixed(
-      1
-    )
-    const elapsedTime = Date.now() - this.startTime
-    const uploadSpeed = (
-      transferredBytes /
-      (1024 * 1024) /
-      (elapsedTime / 1000)
-    ).toFixed(1)
-
-    core.info(
-      `Sent ${transferredBytes} of ${this.contentLength} (${percentage}%), ${uploadSpeed} MBs/sec`
-    )
-
-    if (this.isDone()) {
-      this.displayedComplete = true
-    }
+      throw new Error("STUB");
   }
 
   /**
    * Returns a function used to handle TransferProgressEvents.
    */
   onProgress(): (progress: TransferProgressEvent) => void {
-    return (progress: TransferProgressEvent) => {
-      this.setSentBytes(progress.loadedBytes)
-    }
+      throw new Error("STUB");
   }
 
   /**
@@ -93,15 +70,7 @@ export class UploadProgress {
    * @param delayInMs the delay between each write
    */
   startDisplayTimer(delayInMs = 1000): void {
-    const displayCallback = (): void => {
-      this.display()
-
-      if (!this.isDone()) {
-        this.timeoutHandle = setTimeout(displayCallback, delayInMs)
-      }
-    }
-
-    this.timeoutHandle = setTimeout(displayCallback, delayInMs)
+      throw new Error("STUB");
   }
 
   /**
@@ -110,12 +79,7 @@ export class UploadProgress {
    * been written.
    */
   stopDisplayTimer(): void {
-    if (this.timeoutHandle) {
-      clearTimeout(this.timeoutHandle)
-      this.timeoutHandle = undefined
-    }
-
-    this.display()
+      throw new Error("STUB");
   }
 }
 
@@ -134,44 +98,5 @@ export async function uploadCacheArchiveSDK(
   archivePath: string,
   options?: UploadOptions
 ): Promise<BlobUploadCommonResponse> {
-  const blobClient: BlobClient = new BlobClient(signedUploadURL)
-  const blockBlobClient: BlockBlobClient = blobClient.getBlockBlobClient()
-  const uploadProgress = new UploadProgress(options?.archiveSizeBytes ?? 0)
-
-  // Specify data transfer options
-  const uploadOptions: BlockBlobParallelUploadOptions = {
-    blockSize: options?.uploadChunkSize,
-    concurrency: options?.uploadConcurrency, // maximum number of parallel transfer workers
-    maxSingleShotSize: 128 * 1024 * 1024, // 128 MiB initial transfer size
-    onProgress: uploadProgress.onProgress()
-  }
-
-  try {
-    uploadProgress.startDisplayTimer()
-
-    core.debug(
-      `BlobClient: ${blobClient.name}:${blobClient.accountName}:${blobClient.containerName}`
-    )
-
-    const response = await blockBlobClient.uploadFile(
-      archivePath,
-      uploadOptions
-    )
-
-    // TODO: better management of non-retryable errors
-    if (response._response.status >= 400) {
-      throw new InvalidResponseError(
-        `uploadCacheArchiveSDK: upload failed with status code ${response._response.status}`
-      )
-    }
-
-    return response
-  } catch (error) {
-    core.warning(
-      `uploadCacheArchiveSDK: internal error uploading cache archive: ${error.message}`
-    )
-    throw error
-  } finally {
-    uploadProgress.stopDisplayTimer()
-  }
+    throw new Error("STUB");
 }

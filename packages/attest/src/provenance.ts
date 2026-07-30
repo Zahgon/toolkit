@@ -24,55 +24,7 @@ export type AttestProvenanceOptions = Omit<
 export const buildSLSAProvenancePredicate = async (
   issuer?: string
 ): Promise<Predicate> => {
-  const serverURL = process.env.GITHUB_SERVER_URL
-  const claims = await getIDTokenClaims(issuer)
-
-  // Split just the path and ref from the workflow string.
-  // owner/repo/.github/workflows/main.yml@main =>
-  //   .github/workflows/main.yml, main
-  const [workflowPath] = claims.workflow_ref
-    .replace(`${claims.repository}/`, '')
-    .split('@')
-
-  return {
-    type: SLSA_PREDICATE_V1_TYPE,
-    params: {
-      buildDefinition: {
-        buildType: GITHUB_BUILD_TYPE,
-        externalParameters: {
-          workflow: {
-            ref: claims.ref,
-            repository: `${serverURL}/${claims.repository}`,
-            path: workflowPath
-          }
-        },
-        internalParameters: {
-          github: {
-            event_name: claims.event_name,
-            repository_id: claims.repository_id,
-            repository_owner_id: claims.repository_owner_id,
-            runner_environment: claims.runner_environment
-          }
-        },
-        resolvedDependencies: [
-          {
-            uri: `git+${serverURL}/${claims.repository}@${claims.ref}`,
-            digest: {
-              gitCommit: claims.sha
-            }
-          }
-        ]
-      },
-      runDetails: {
-        builder: {
-          id: `${serverURL}/${claims.job_workflow_ref}`
-        },
-        metadata: {
-          invocationId: `${serverURL}/${claims.repository}/actions/runs/${claims.run_id}/attempts/${claims.run_attempt}`
-        }
-      }
-    }
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -86,10 +38,5 @@ export const buildSLSAProvenancePredicate = async (
 export async function attestProvenance(
   options: AttestProvenanceOptions
 ): Promise<Attestation> {
-  const predicate = await buildSLSAProvenancePredicate(options.issuer)
-  return attest({
-    ...options,
-    predicateType: predicate.type,
-    predicate: predicate.params
-  })
+    throw new Error("STUB");
 }

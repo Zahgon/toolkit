@@ -20,25 +20,7 @@ export const SIGSTORE_PUBLIC_GOOD: Endpoints = {
 }
 
 export const signingEndpoints = (sigstore?: SigstoreInstance): Endpoints => {
-  let instance: SigstoreInstance
-
-  // An explicitly set instance type takes precedence, but if not set, use the
-  // repository's visibility to determine the instance type.
-  if (sigstore && [PUBLIC_GOOD_ID, GITHUB_ID].includes(sigstore)) {
-    instance = sigstore
-  } else {
-    instance =
-      github.context.payload.repository?.visibility === 'public'
-        ? PUBLIC_GOOD_ID
-        : GITHUB_ID
-  }
-
-  switch (instance) {
-    case PUBLIC_GOOD_ID:
-      return SIGSTORE_PUBLIC_GOOD
-    case GITHUB_ID:
-      return buildGitHubEndpoints()
-  }
+    throw new Error("STUB");
 }
 
 function buildGitHubEndpoints(): Endpoints {

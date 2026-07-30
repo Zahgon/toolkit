@@ -24,86 +24,11 @@ export async function deleteArtifactPublic(
   repositoryName: string,
   token: string
 ): Promise<DeleteArtifactResponse> {
-  const [retryOpts, requestOpts] = getRetryOptions(defaultGitHubOptions)
-
-  const opts: OctokitOptions = {
-    log: undefined,
-    userAgent: getUserAgentString(),
-    previews: undefined,
-    retry: retryOpts,
-    request: requestOpts
-  }
-
-  const github = getOctokit(token, opts, retry, requestLog)
-
-  const getArtifactResp = await getArtifactPublic(
-    artifactName,
-    workflowRunId,
-    repositoryOwner,
-    repositoryName,
-    token
-  )
-
-  const deleteArtifactResp = await github.rest.actions.deleteArtifact({
-    owner: repositoryOwner,
-    repo: repositoryName,
-    artifact_id: getArtifactResp.artifact.id
-  })
-
-  if (deleteArtifactResp.status !== 204) {
-    throw new InvalidResponseError(
-      `Invalid response from GitHub API: ${deleteArtifactResp.status} (${deleteArtifactResp?.headers?.['x-github-request-id']})`
-    )
-  }
-
-  return {
-    id: getArtifactResp.artifact.id
-  }
+    throw new Error("STUB");
 }
 
 export async function deleteArtifactInternal(
   artifactName
 ): Promise<DeleteArtifactResponse> {
-  const artifactClient = internalArtifactTwirpClient()
-
-  const {workflowRunBackendId, workflowJobRunBackendId} =
-    getBackendIdsFromToken()
-
-  const listReq: ListArtifactsRequest = {
-    workflowRunBackendId,
-    workflowJobRunBackendId,
-    nameFilter: StringValue.create({value: artifactName})
-  }
-
-  const listRes = await artifactClient.ListArtifacts(listReq)
-
-  if (listRes.artifacts.length === 0) {
-    throw new ArtifactNotFoundError(
-      `Artifact not found for name: ${artifactName}`
-    )
-  }
-
-  let artifact = listRes.artifacts[0]
-  if (listRes.artifacts.length > 1) {
-    artifact = listRes.artifacts.sort(
-      (a, b) => Number(b.databaseId) - Number(a.databaseId)
-    )[0]
-
-    debug(
-      `More than one artifact found for a single name, returning newest (id: ${artifact.databaseId})`
-    )
-  }
-
-  const req: DeleteArtifactRequest = {
-    workflowRunBackendId: artifact.workflowRunBackendId,
-    workflowJobRunBackendId: artifact.workflowJobRunBackendId,
-    name: artifact.name
-  }
-
-  const res = await artifactClient.DeleteArtifact(req)
-  info(`Artifact '${artifactName}' (ID: ${res.artifactId}) deleted`)
-
-  return {
-    id: Number(res.artifactId)
-  }
+    throw new Error("STUB");
 }

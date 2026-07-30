@@ -103,15 +103,7 @@ class Summary {
     content: string | null,
     attrs: {[attribute: string]: string} = {}
   ): string {
-    const htmlAttrs = Object.entries(attrs)
-      .map(([key, value]) => ` ${key}="${value}"`)
-      .join('')
-
-    if (!content) {
-      return `<${tag}${htmlAttrs}>`
-    }
-
-    return `<${tag}${htmlAttrs}>${content}</${tag}>`
+      throw new Error("STUB");
   }
 
   /**
@@ -135,7 +127,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   async clear(): Promise<Summary> {
-    return this.emptyBuffer().write({overwrite: true})
+      throw new Error("STUB");
   }
 
   /**
@@ -153,7 +145,7 @@ class Summary {
    * @returns {boolen} true if the buffer is empty
    */
   isEmptyBuffer(): boolean {
-    return this._buffer.length === 0
+      throw new Error("STUB");
   }
 
   /**
@@ -175,8 +167,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addRaw(text: string, addEOL = false): Summary {
-    this._buffer += text
-    return addEOL ? this.addEOL() : this
+      throw new Error("STUB");
   }
 
   /**
@@ -185,7 +176,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addEOL(): Summary {
-    return this.addRaw(EOL)
+      throw new Error("STUB");
   }
 
   /**
@@ -197,11 +188,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addCodeBlock(code: string, lang?: string): Summary {
-    const attrs = {
-      ...(lang && {lang})
-    }
-    const element = this.wrap('pre', this.wrap('code', code), attrs)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -213,10 +200,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addList(items: string[], ordered = false): Summary {
-    const tag = ordered ? 'ol' : 'ul'
-    const listItems = items.map(item => this.wrap('li', item)).join('')
-    const element = this.wrap(tag, listItems)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -227,31 +211,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addTable(rows: SummaryTableRow[]): Summary {
-    const tableBody = rows
-      .map(row => {
-        const cells = row
-          .map(cell => {
-            if (typeof cell === 'string') {
-              return this.wrap('td', cell)
-            }
-
-            const {header, data, colspan, rowspan} = cell
-            const tag = header ? 'th' : 'td'
-            const attrs = {
-              ...(colspan && {colspan}),
-              ...(rowspan && {rowspan})
-            }
-
-            return this.wrap(tag, data, attrs)
-          })
-          .join('')
-
-        return this.wrap('tr', cells)
-      })
-      .join('')
-
-    const element = this.wrap('table', tableBody)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -263,8 +223,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addDetails(label: string, content: string): Summary {
-    const element = this.wrap('details', this.wrap('summary', label) + content)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -277,14 +236,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addImage(src: string, alt: string, options?: SummaryImageOptions): Summary {
-    const {width, height} = options || {}
-    const attrs = {
-      ...(width && {width}),
-      ...(height && {height})
-    }
-
-    const element = this.wrap('img', null, {src, alt, ...attrs})
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -296,12 +248,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addHeading(text: string, level?: number | string): Summary {
-    const tag = `h${level}`
-    const allowedTag = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tag)
-      ? tag
-      : 'h1'
-    const element = this.wrap(allowedTag, text)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -310,8 +257,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addSeparator(): Summary {
-    const element = this.wrap('hr', null)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -320,8 +266,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addBreak(): Summary {
-    const element = this.wrap('br', null)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -333,11 +278,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addQuote(text: string, cite?: string): Summary {
-    const attrs = {
-      ...(cite && {cite})
-    }
-    const element = this.wrap('blockquote', text, attrs)
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 
   /**
@@ -349,8 +290,7 @@ class Summary {
    * @returns {Summary} summary instance
    */
   addLink(text: string, href: string): Summary {
-    const element = this.wrap('a', text, {href})
-    return this.addRaw(element).addEOL()
+      throw new Error("STUB");
   }
 }
 

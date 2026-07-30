@@ -15,7 +15,7 @@ export async function create(
   patterns: string,
   options?: GlobOptions
 ): Promise<Globber> {
-  return await DefaultGlobber.create(patterns, options)
+    throw new Error("STUB");
 }
 
 /**
@@ -32,10 +32,5 @@ export async function hashFiles(
   options?: HashFileOptions,
   verbose: Boolean = false
 ): Promise<string> {
-  let followSymbolicLinks = true
-  if (options && typeof options.followSymbolicLinks === 'boolean') {
-    followSymbolicLinks = options.followSymbolicLinks
-  }
-  const globber = await create(patterns, {followSymbolicLinks})
-  return _hashFiles(globber, currentWorkspace, options, verbose)
+    throw new Error("STUB");
 }

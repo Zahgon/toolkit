@@ -22,33 +22,5 @@ export const writeAttestation = async (
   token: string,
   options: WriteOptions = {}
 ): Promise<string> => {
-  const retries = options.retry ?? DEFAULT_RETRY_COUNT
-  const octokit = github.getOctokit(token, {retry: {retries}}, retry)
-
-  const headers = {
-    'User-Agent': getUserAgent(),
-    ...options.headers
-  }
-
-  try {
-    const response = await octokit.request(CREATE_ATTESTATION_REQUEST, {
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      headers,
-      bundle: attestation as {
-        mediaType?: string
-        verificationMaterial?: {[key: string]: unknown}
-        dsseEnvelope?: {[key: string]: unknown}
-      }
-    })
-
-    const data =
-      typeof response.data == 'string'
-        ? JSON.parse(response.data)
-        : response.data
-    return data?.id
-  } catch (err) {
-    const message = err instanceof Error ? err.message : err
-    throw new Error(`Failed to persist attestation: ${message}`)
-  }
+    throw new Error("STUB");
 }

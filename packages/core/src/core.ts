@@ -81,15 +81,7 @@ export interface AnnotationProperties {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function exportVariable(name: string, val: any): void {
-  const convertedVal = toCommandValue(val)
-  process.env[name] = convertedVal
-
-  const filePath = process.env['GITHUB_ENV'] || ''
-  if (filePath) {
-    return issueFileCommand('ENV', prepareKeyValueMessage(name, val))
-  }
-
-  issueCommand('set-env', {name}, convertedVal)
+    throw new Error("STUB");
 }
 
 /**
@@ -130,13 +122,7 @@ export function setSecret(secret: string): void {
  * @param inputPath
  */
 export function addPath(inputPath: string): void {
-  const filePath = process.env['GITHUB_PATH'] || ''
-  if (filePath) {
-    issueFileCommand('PATH', inputPath)
-  } else {
-    issueCommand('add-path', {}, inputPath)
-  }
-  process.env['PATH'] = `${inputPath}${path.delimiter}${process.env['PATH']}`
+    throw new Error("STUB");
 }
 
 /**
@@ -149,17 +135,7 @@ export function addPath(inputPath: string): void {
  * @returns   string
  */
 export function getInput(name: string, options?: InputOptions): string {
-  const val: string =
-    process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || ''
-  if (options && options.required && !val) {
-    throw new Error(`Input required and not supplied: ${name}`)
-  }
-
-  if (options && options.trimWhitespace === false) {
-    return val
-  }
-
-  return val.trim()
+    throw new Error("STUB");
 }
 
 /**
@@ -174,15 +150,7 @@ export function getMultilineInput(
   name: string,
   options?: InputOptions
 ): string[] {
-  const inputs: string[] = getInput(name, options)
-    .split('\n')
-    .filter(x => x !== '')
-
-  if (options && options.trimWhitespace === false) {
-    return inputs
-  }
-
-  return inputs.map(input => input.trim())
+    throw new Error("STUB");
 }
 
 /**
@@ -196,15 +164,7 @@ export function getMultilineInput(
  * @returns   boolean
  */
 export function getBooleanInput(name: string, options?: InputOptions): boolean {
-  const trueValue = ['true', 'True', 'TRUE']
-  const falseValue = ['false', 'False', 'FALSE']
-  const val = getInput(name, options)
-  if (trueValue.includes(val)) return true
-  if (falseValue.includes(val)) return false
-  throw new TypeError(
-    `Input does not meet YAML 1.2 "Core Schema" specification: ${name}\n` +
-      `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``
-  )
+    throw new Error("STUB");
 }
 
 /**
@@ -215,13 +175,7 @@ export function getBooleanInput(name: string, options?: InputOptions): boolean {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function setOutput(name: string, value: any): void {
-  const filePath = process.env['GITHUB_OUTPUT'] || ''
-  if (filePath) {
-    return issueFileCommand('OUTPUT', prepareKeyValueMessage(name, value))
-  }
-
-  process.stdout.write(os.EOL)
-  issueCommand('set-output', {name}, toCommandValue(value))
+    throw new Error("STUB");
 }
 
 /**
@@ -230,7 +184,7 @@ export function setOutput(name: string, value: any): void {
  *
  */
 export function setCommandEcho(enabled: boolean): void {
-  issue('echo', enabled ? 'on' : 'off')
+    throw new Error("STUB");
 }
 
 //-----------------------------------------------------------------------
@@ -243,9 +197,7 @@ export function setCommandEcho(enabled: boolean): void {
  * @param message add error issue message
  */
 export function setFailed(message: string | Error): void {
-  process.exitCode = ExitCode.Failure
-
-  error(message)
+    throw new Error("STUB");
 }
 
 //-----------------------------------------------------------------------
@@ -256,7 +208,7 @@ export function setFailed(message: string | Error): void {
  * Gets whether Actions Step Debug is on or not
  */
 export function isDebug(): boolean {
-  return process.env['RUNNER_DEBUG'] === '1'
+    throw new Error("STUB");
 }
 
 /**
@@ -308,11 +260,7 @@ export function notice(
   message: string | Error,
   properties: AnnotationProperties = {}
 ): void {
-  issueCommand(
-    'notice',
-    toCommandProperties(properties),
-    message instanceof Error ? message.toString() : message
-  )
+    throw new Error("STUB");
 }
 
 /**
@@ -331,14 +279,14 @@ export function info(message: string): void {
  * @param name The name of the output group
  */
 export function startGroup(name: string): void {
-  issue('group', name)
+    throw new Error("STUB");
 }
 
 /**
  * End an output group.
  */
 export function endGroup(): void {
-  issue('endgroup')
+    throw new Error("STUB");
 }
 
 /**
@@ -350,17 +298,7 @@ export function endGroup(): void {
  * @param fn The function to wrap in the group
  */
 export async function group<T>(name: string, fn: () => Promise<T>): Promise<T> {
-  startGroup(name)
-
-  let result: T
-
-  try {
-    result = await fn()
-  } finally {
-    endGroup()
-  }
-
-  return result
+    throw new Error("STUB");
 }
 
 //-----------------------------------------------------------------------
@@ -375,12 +313,7 @@ export async function group<T>(name: string, fn: () => Promise<T>): Promise<T> {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function saveState(name: string, value: any): void {
-  const filePath = process.env['GITHUB_STATE'] || ''
-  if (filePath) {
-    return issueFileCommand('STATE', prepareKeyValueMessage(name, value))
-  }
-
-  issueCommand('save-state', {name}, toCommandValue(value))
+    throw new Error("STUB");
 }
 
 /**
@@ -390,7 +323,7 @@ export function saveState(name: string, value: any): void {
  * @returns   string
  */
 export function getState(name: string): string {
-  return process.env[`STATE_${name}`] || ''
+    throw new Error("STUB");
 }
 
 export async function getIDToken(aud?: string): Promise<string> {

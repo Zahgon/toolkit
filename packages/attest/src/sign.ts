@@ -59,13 +59,7 @@ export const signPayload = async (
   payload: Payload,
   options: SignOptions
 ): Promise<Bundle> => {
-  const artifact = {
-    data: payload.body,
-    type: payload.type
-  }
-
-  // Sign the artifact and build the bundle
-  return initBundleBuilder(options).create(artifact)
+    throw new Error("STUB");
 }
 
 // Assembles the Sigstore bundle builder with the appropriate options

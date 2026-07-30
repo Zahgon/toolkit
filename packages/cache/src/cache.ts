@@ -24,17 +24,13 @@ import {CacheReadDeniedMessagePrefix} from './internal/constants.js'
 export type {DownloadOptions, UploadOptions}
 export class ValidationError extends Error {
   constructor(message: string) {
-    super(message)
-    this.name = 'ValidationError'
-    Object.setPrototypeOf(this, ValidationError.prototype)
+      throw new Error("STUB");
   }
 }
 
 export class ReserveCacheError extends Error {
   constructor(message: string) {
-    super(message)
-    this.name = 'ReserveCacheError'
-    Object.setPrototypeOf(this, ReserveCacheError.prototype)
+      throw new Error("STUB");
   }
 }
 
@@ -64,9 +60,7 @@ export const CACHE_WRITE_DENIED_PREFIX = 'cache write denied:'
  */
 export class CacheWriteDeniedError extends ReserveCacheError {
   constructor(message: string) {
-    super(message)
-    this.name = 'CacheWriteDeniedError'
-    Object.setPrototypeOf(this, CacheWriteDeniedError.prototype)
+      throw new Error("STUB");
   }
 }
 
@@ -79,40 +73,22 @@ export const CACHE_READ_DENIED_PREFIX = CacheReadDeniedMessagePrefix
 // warning and reports a cache miss rather than rethrowing this.
 export class CacheReadDeniedError extends Error {
   constructor(message: string) {
-    super(message)
-    this.name = 'CacheReadDeniedError'
-    Object.setPrototypeOf(this, CacheReadDeniedError.prototype)
+      throw new Error("STUB");
   }
 }
 
 export class FinalizeCacheError extends Error {
   constructor(message: string) {
-    super(message)
-    this.name = 'FinalizeCacheError'
-    Object.setPrototypeOf(this, FinalizeCacheError.prototype)
+      throw new Error("STUB");
   }
 }
 
 function checkPaths(paths: string[]): void {
-  if (!paths || paths.length === 0) {
-    throw new ValidationError(
-      `Path Validation Error: At least one directory or file path is required`
-    )
-  }
+    throw new Error("STUB");
 }
 
 function checkKey(key: string): void {
-  if (key.length > 512) {
-    throw new ValidationError(
-      `Key Validation Error: ${key} cannot be larger than 512 characters.`
-    )
-  }
-  const regex = /^[^,]*$/
-  if (!regex.test(key)) {
-    throw new ValidationError(
-      `Key Validation Error: ${key} cannot contain commas.`
-    )
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -121,18 +97,7 @@ function checkKey(key: string): void {
  * @returns boolean return true if Actions cache service feature is available, otherwise false
  */
 export function isFeatureAvailable(): boolean {
-  const cacheServiceVersion = getCacheServiceVersion()
-
-  // Check availability based on cache service version
-  switch (cacheServiceVersion) {
-    case 'v2':
-      // For v2, we need ACTIONS_RESULTS_URL
-      return !!process.env['ACTIONS_RESULTS_URL']
-    case 'v1':
-    default:
-      // For v1, we only need ACTIONS_CACHE_URL
-      return !!process.env['ACTIONS_CACHE_URL']
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -152,41 +117,7 @@ export async function restoreCache(
   options?: DownloadOptions,
   enableCrossOsArchive = false
 ): Promise<string | undefined> {
-  const cacheServiceVersion: string = getCacheServiceVersion()
-  core.debug(`Cache service version: ${cacheServiceVersion}`)
-
-  checkPaths(paths)
-
-  const cacheMode = getCacheMode()
-  if (!isCacheReadable(cacheMode)) {
-    core.info(
-      `Cache restore skipped: the effective cache-mode '${cacheMode}' does not permit reads.`
-    )
-    core.debug(
-      `Skipped restore for paths [${paths.join(', ')}] with primary key '${primaryKey}'.`
-    )
-    return undefined
-  }
-
-  switch (cacheServiceVersion) {
-    case 'v2':
-      return await restoreCacheV2(
-        paths,
-        primaryKey,
-        restoreKeys,
-        options,
-        enableCrossOsArchive
-      )
-    case 'v1':
-    default:
-      return await restoreCacheV1(
-        paths,
-        primaryKey,
-        restoreKeys,
-        options,
-        enableCrossOsArchive
-      )
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -206,111 +137,7 @@ async function restoreCacheV1(
   options?: DownloadOptions,
   enableCrossOsArchive = false
 ): Promise<string | undefined> {
-  restoreKeys = restoreKeys || []
-  const keys = [primaryKey, ...restoreKeys]
-
-  core.debug('Resolved Keys:')
-  core.debug(JSON.stringify(keys))
-
-  if (keys.length > 10) {
-    throw new ValidationError(
-      `Key Validation Error: Keys are limited to a maximum of 10.`
-    )
-  }
-  for (const key of keys) {
-    checkKey(key)
-  }
-
-  const compressionMethod = await utils.getCompressionMethod()
-  let archivePath = ''
-  try {
-    // path are needed to compute version
-    let cacheEntry
-    try {
-      cacheEntry = await cacheHttpClient.getCacheEntry(keys, paths, {
-        compressionMethod,
-        enableCrossOsArchive
-      })
-    } catch (error) {
-      // The v1 artifact cache service returns HTTP 403 with a
-      // `cache read denied:` body when the run's token has no readable cache
-      // scopes. getCacheEntry lives in a dependency-free internal module and
-      // cannot import CacheReadDeniedError without a circular dependency, so it
-      // only surfaces the raw denial message; we classify it into the typed
-      // error here so the outer catch and consumers can dispatch on it.
-      const errorMessage = (error as Error)?.message ?? ''
-      if (errorMessage.includes(CACHE_READ_DENIED_PREFIX)) {
-        throw new CacheReadDeniedError(errorMessage)
-      }
-      throw error
-    }
-    if (!cacheEntry?.archiveLocation) {
-      // Cache not found
-      return undefined
-    }
-
-    if (options?.lookupOnly) {
-      core.info('Lookup only - skipping download')
-      return cacheEntry.cacheKey
-    }
-
-    archivePath = path.join(
-      await utils.createTempDirectory(),
-      utils.getCacheFileName(compressionMethod)
-    )
-    core.debug(`Archive Path: ${archivePath}`)
-
-    // Download the cache from the cache entry
-    await cacheHttpClient.downloadCache(
-      cacheEntry.archiveLocation,
-      archivePath,
-      options
-    )
-
-    if (core.isDebug()) {
-      await listTar(archivePath, compressionMethod)
-    }
-
-    const archiveFileSize = utils.getArchiveFileSizeInBytes(archivePath)
-    core.info(
-      `Cache Size: ~${Math.round(
-        archiveFileSize / (1024 * 1024)
-      )} MB (${archiveFileSize} B)`
-    )
-
-    await extractTar(archivePath, compressionMethod)
-    core.info('Cache restored successfully')
-
-    return cacheEntry.cacheKey
-  } catch (error) {
-    const typedError = error as Error
-    if (typedError.name === ValidationError.name) {
-      throw error
-    } else {
-      // warn on cache restore failure and continue build
-      // Log server errors (5xx) as errors, all other errors as warnings.
-      // A read denied by policy (CacheReadDeniedError) is not an HttpClientError
-      // so it falls here and is warned, treated as a cache miss.
-      if (
-        typedError instanceof HttpClientError &&
-        typeof typedError.statusCode === 'number' &&
-        typedError.statusCode >= 500
-      ) {
-        core.error(`Failed to restore: ${(error as Error).message}`)
-      } else {
-        core.warning(`Failed to restore: ${(error as Error).message}`)
-      }
-    }
-  } finally {
-    // Try to delete the archive to save space
-    try {
-      await utils.unlinkFile(archivePath)
-    } catch (error) {
-      core.debug(`Failed to delete archive: ${error}`)
-    }
-  }
-
-  return undefined
+    throw new Error("STUB");
 }
 
 /**
@@ -330,134 +157,7 @@ async function restoreCacheV2(
   options?: DownloadOptions,
   enableCrossOsArchive = false
 ): Promise<string | undefined> {
-  // Override UploadOptions to force the use of Azure
-  options = {
-    ...options,
-    useAzureSdk: true
-  }
-  restoreKeys = restoreKeys || []
-  const keys = [primaryKey, ...restoreKeys]
-
-  core.debug('Resolved Keys:')
-  core.debug(JSON.stringify(keys))
-
-  if (keys.length > 10) {
-    throw new ValidationError(
-      `Key Validation Error: Keys are limited to a maximum of 10.`
-    )
-  }
-  for (const key of keys) {
-    checkKey(key)
-  }
-
-  let archivePath = ''
-  try {
-    const twirpClient = cacheTwirpClient.internalCacheTwirpClient()
-    const compressionMethod = await utils.getCompressionMethod()
-
-    const request: GetCacheEntryDownloadURLRequest = {
-      key: primaryKey,
-      restoreKeys,
-      version: utils.getCacheVersion(
-        paths,
-        compressionMethod,
-        enableCrossOsArchive
-      )
-    }
-
-    let response
-    try {
-      response = await twirpClient.GetCacheEntryDownloadURL(request)
-    } catch (error) {
-      // The receiver returns twirp PermissionDenied (403) when the run's token
-      // has no readable cache scopes. The client wraps that 403, so the stable
-      // prefix is embedded in the message rather than leading it.
-      const errorMessage = (error as Error)?.message ?? ''
-      if (errorMessage.includes(CACHE_READ_DENIED_PREFIX)) {
-        throw new CacheReadDeniedError(errorMessage)
-      }
-      throw error
-    }
-
-    if (!response.ok) {
-      core.debug(
-        `Cache not found for version ${request.version} of keys: ${keys.join(
-          ', '
-        )}`
-      )
-      return undefined
-    }
-
-    const isRestoreKeyMatch = request.key !== response.matchedKey
-    if (isRestoreKeyMatch) {
-      core.info(`Cache hit for restore-key: ${response.matchedKey}`)
-    } else {
-      core.info(`Cache hit for: ${response.matchedKey}`)
-    }
-
-    if (options?.lookupOnly) {
-      core.info('Lookup only - skipping download')
-      return response.matchedKey
-    }
-
-    archivePath = path.join(
-      await utils.createTempDirectory(),
-      utils.getCacheFileName(compressionMethod)
-    )
-    core.debug(`Archive path: ${archivePath}`)
-    core.debug(`Starting download of archive to: ${archivePath}`)
-
-    await cacheHttpClient.downloadCache(
-      response.signedDownloadUrl,
-      archivePath,
-      options
-    )
-
-    const archiveFileSize = utils.getArchiveFileSizeInBytes(archivePath)
-    core.info(
-      `Cache Size: ~${Math.round(
-        archiveFileSize / (1024 * 1024)
-      )} MB (${archiveFileSize} B)`
-    )
-
-    if (core.isDebug()) {
-      await listTar(archivePath, compressionMethod)
-    }
-
-    await extractTar(archivePath, compressionMethod)
-    core.info('Cache restored successfully')
-
-    return response.matchedKey
-  } catch (error) {
-    const typedError = error as Error
-    if (typedError.name === ValidationError.name) {
-      throw error
-    } else {
-      // Suppress all non-validation cache related errors because caching should be optional
-      // Log server errors (5xx) as errors, all other errors as warnings.
-      // A read denied by policy (CacheReadDeniedError) is not an HttpClientError
-      // so it falls here and is warned, treated as a cache miss.
-      if (
-        typedError instanceof HttpClientError &&
-        typeof typedError.statusCode === 'number' &&
-        typedError.statusCode >= 500
-      ) {
-        core.error(`Failed to restore: ${(error as Error).message}`)
-      } else {
-        core.warning(`Failed to restore: ${(error as Error).message}`)
-      }
-    }
-  } finally {
-    try {
-      if (archivePath) {
-        await utils.unlinkFile(archivePath)
-      }
-    } catch (error) {
-      core.debug(`Failed to delete archive: ${error}`)
-    }
-  }
-
-  return undefined
+    throw new Error("STUB");
 }
 
 /**
@@ -475,29 +175,7 @@ export async function saveCache(
   options?: UploadOptions,
   enableCrossOsArchive = false
 ): Promise<number> {
-  const cacheServiceVersion: string = getCacheServiceVersion()
-  core.debug(`Cache service version: ${cacheServiceVersion}`)
-  checkPaths(paths)
-  checkKey(key)
-
-  const cacheMode = getCacheMode()
-  if (!isCacheWritable(cacheMode)) {
-    core.info(
-      `Cache save skipped: the effective cache-mode '${cacheMode}' does not permit writes.`
-    )
-    core.debug(
-      `Skipped save for paths [${paths.join(', ')}] with key '${key}'.`
-    )
-    return -1
-  }
-
-  switch (cacheServiceVersion) {
-    case 'v2':
-      return await saveCacheV2(paths, key, options, enableCrossOsArchive)
-    case 'v1':
-    default:
-      return await saveCacheV1(paths, key, options, enableCrossOsArchive)
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -515,116 +193,7 @@ async function saveCacheV1(
   options?: UploadOptions,
   enableCrossOsArchive = false
 ): Promise<number> {
-  const compressionMethod = await utils.getCompressionMethod()
-  let cacheId = -1
-
-  const cachePaths = await utils.resolvePaths(paths)
-  core.debug('Cache Paths:')
-  core.debug(`${JSON.stringify(cachePaths)}`)
-
-  if (cachePaths.length === 0) {
-    throw new Error(
-      `Path Validation Error: Path(s) specified in the action for caching do(es) not exist, hence no cache is being saved.`
-    )
-  }
-
-  const archiveFolder = await utils.createTempDirectory()
-  const archivePath = path.join(
-    archiveFolder,
-    utils.getCacheFileName(compressionMethod)
-  )
-
-  core.debug(`Archive Path: ${archivePath}`)
-
-  try {
-    await createTar(archiveFolder, cachePaths, compressionMethod)
-    if (core.isDebug()) {
-      await listTar(archivePath, compressionMethod)
-    }
-    const fileSizeLimit = 10 * 1024 * 1024 * 1024 // 10GB per repo limit
-    const archiveFileSize = utils.getArchiveFileSizeInBytes(archivePath)
-    core.debug(`File Size: ${archiveFileSize}`)
-
-    // For GHES, this check will take place in ReserveCache API with enterprise file size limit
-    if (archiveFileSize > fileSizeLimit && !isGhes()) {
-      throw new Error(
-        `Cache size of ~${Math.round(
-          archiveFileSize / (1024 * 1024)
-        )} MB (${archiveFileSize} B) is over the 10GB limit, not saving cache.`
-      )
-    }
-
-    core.debug('Reserving Cache')
-    const reserveCacheResponse = await cacheHttpClient.reserveCache(
-      key,
-      paths,
-      {
-        compressionMethod,
-        enableCrossOsArchive,
-        cacheSize: archiveFileSize
-      }
-    )
-
-    if (reserveCacheResponse?.result?.cacheId) {
-      cacheId = reserveCacheResponse?.result?.cacheId
-    } else if (reserveCacheResponse?.statusCode === 400) {
-      throw new Error(
-        reserveCacheResponse?.error?.message ??
-          `Cache size of ~${Math.round(
-            archiveFileSize / (1024 * 1024)
-          )} MB (${archiveFileSize} B) is over the data cap limit, not saving cache.`
-      )
-    } else {
-      // Inspect the receiver's error message before deciding which error to
-      // throw. A message starting with the stable `cache write denied:`
-      // prefix indicates the issuer downgraded the token to read-only
-      // (policy denial), not a contention case, so we surface it as a
-      // CacheWriteDeniedError which the outer catch arm logs at warning
-      // level.
-      const detailMessage = reserveCacheResponse?.error?.message
-      if (detailMessage?.startsWith(CACHE_WRITE_DENIED_PREFIX)) {
-        throw new CacheWriteDeniedError(
-          `Unable to reserve cache with key ${key}. More details: ${detailMessage}`
-        )
-      }
-      throw new ReserveCacheError(
-        `Unable to reserve cache with key ${key}, another job may be creating this cache. More details: ${reserveCacheResponse?.error?.message}`
-      )
-    }
-
-    core.debug(`Saving Cache (ID: ${cacheId})`)
-    await cacheHttpClient.saveCache(cacheId, archivePath, '', options)
-  } catch (error) {
-    const typedError = error as Error
-    if (typedError.name === ValidationError.name) {
-      throw error
-    } else if (typedError.name === ReserveCacheError.name) {
-      core.info(`Failed to save: ${typedError.message}`)
-    } else {
-      // Log server errors (5xx) as errors, all other errors as warnings.
-      // A write denied by policy (CacheWriteDeniedError) is not an
-      // HttpClientError and its name does not match the ReserveCacheError arm,
-      // so it falls here and is warned without failing the run.
-      if (
-        typedError instanceof HttpClientError &&
-        typeof typedError.statusCode === 'number' &&
-        typedError.statusCode >= 500
-      ) {
-        core.error(`Failed to save: ${typedError.message}`)
-      } else {
-        core.warning(`Failed to save: ${typedError.message}`)
-      }
-    }
-  } finally {
-    // Try to delete the archive to save space
-    try {
-      await utils.unlinkFile(archivePath)
-    } catch (error) {
-      core.debug(`Failed to delete archive: ${error}`)
-    }
-  }
-
-  return cacheId
+    throw new Error("STUB");
 }
 
 /**
@@ -642,149 +211,5 @@ async function saveCacheV2(
   options?: UploadOptions,
   enableCrossOsArchive = false
 ): Promise<number> {
-  // Override UploadOptions to force the use of Azure
-  // ...options goes first because we want to override the default values
-  // set in UploadOptions with these specific figures
-  options = {
-    ...options,
-    uploadChunkSize: 64 * 1024 * 1024, // 64 MiB
-    uploadConcurrency: 8, // 8 workers for parallel upload
-    useAzureSdk: true
-  }
-  const compressionMethod = await utils.getCompressionMethod()
-  const twirpClient = cacheTwirpClient.internalCacheTwirpClient()
-  let cacheId = -1
-
-  const cachePaths = await utils.resolvePaths(paths)
-  core.debug('Cache Paths:')
-  core.debug(`${JSON.stringify(cachePaths)}`)
-
-  if (cachePaths.length === 0) {
-    throw new Error(
-      `Path Validation Error: Path(s) specified in the action for caching do(es) not exist, hence no cache is being saved.`
-    )
-  }
-
-  const archiveFolder = await utils.createTempDirectory()
-  const archivePath = path.join(
-    archiveFolder,
-    utils.getCacheFileName(compressionMethod)
-  )
-
-  core.debug(`Archive Path: ${archivePath}`)
-
-  try {
-    await createTar(archiveFolder, cachePaths, compressionMethod)
-    if (core.isDebug()) {
-      await listTar(archivePath, compressionMethod)
-    }
-
-    const archiveFileSize = utils.getArchiveFileSizeInBytes(archivePath)
-    core.debug(`File Size: ${archiveFileSize}`)
-
-    // Set the archive size in the options, will be used to display the upload progress
-    options.archiveSizeBytes = archiveFileSize
-
-    core.debug('Reserving Cache')
-    const version = utils.getCacheVersion(
-      paths,
-      compressionMethod,
-      enableCrossOsArchive
-    )
-    const request: CreateCacheEntryRequest = {
-      key,
-      version
-    }
-
-    let signedUploadUrl
-
-    try {
-      const response = await twirpClient.CreateCacheEntry(request)
-      if (!response.ok) {
-        // Skip the redundant inner warning when the receiver signalled a
-        // policy denial: the outer catch arm below will log a single
-        // customer-facing warning.
-        if (
-          response.message &&
-          !response.message.startsWith(CACHE_WRITE_DENIED_PREFIX)
-        ) {
-          core.warning(`Cache reservation failed: ${response.message}`)
-        }
-        throw new Error(response.message || 'Response was not ok')
-      }
-      signedUploadUrl = response.signedUploadUrl
-    } catch (error) {
-      core.debug(`Failed to reserve cache: ${error}`)
-      const errorMessage = (error as Error)?.message ?? ''
-      if (errorMessage.startsWith(CACHE_WRITE_DENIED_PREFIX)) {
-        throw new CacheWriteDeniedError(
-          `Unable to reserve cache with key ${key}. More details: ${errorMessage}`
-        )
-      }
-      throw new ReserveCacheError(
-        `Unable to reserve cache with key ${key}, another job may be creating this cache.`
-      )
-    }
-
-    core.debug(`Attempting to upload cache located at: ${archivePath}`)
-    await cacheHttpClient.saveCache(
-      cacheId,
-      archivePath,
-      signedUploadUrl,
-      options
-    )
-
-    const finalizeRequest: FinalizeCacheEntryUploadRequest = {
-      key,
-      version,
-      sizeBytes: `${archiveFileSize}`
-    }
-
-    const finalizeResponse: FinalizeCacheEntryUploadResponse =
-      await twirpClient.FinalizeCacheEntryUpload(finalizeRequest)
-    core.debug(`FinalizeCacheEntryUploadResponse: ${finalizeResponse.ok}`)
-
-    if (!finalizeResponse.ok) {
-      if (finalizeResponse.message) {
-        throw new FinalizeCacheError(finalizeResponse.message)
-      }
-      throw new Error(
-        `Unable to finalize cache with key ${key}, another job may be finalizing this cache.`
-      )
-    }
-
-    cacheId = parseInt(finalizeResponse.entryId)
-  } catch (error) {
-    const typedError = error as Error
-    if (typedError.name === ValidationError.name) {
-      throw error
-    } else if (typedError.name === ReserveCacheError.name) {
-      core.info(`Failed to save: ${typedError.message}`)
-    } else if (typedError.name === FinalizeCacheError.name) {
-      core.warning(typedError.message)
-    } else {
-      // Log server errors (5xx) as errors, all other errors as warnings.
-      // A write denied by policy (CacheWriteDeniedError) is not an
-      // HttpClientError and its name does not match the ReserveCacheError arm,
-      // so it falls here and is warned without failing the run.
-      if (
-        typedError instanceof HttpClientError &&
-        typeof typedError.statusCode === 'number' &&
-        typedError.statusCode >= 500
-      ) {
-        core.error(`Failed to save: ${typedError.message}`)
-      } else {
-        core.warning(`Failed to save: ${typedError.message}`)
-      }
-    }
-  } finally {
-    // Try to delete the archive to save space
-    try {
-      await utils.unlinkFile(archivePath)
-    } catch (error) {
-      core.debug(`Failed to delete archive: ${error}`)
-    }
-  }
-
-  return cacheId
+    throw new Error("STUB");
 }

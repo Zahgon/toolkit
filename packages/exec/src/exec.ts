@@ -57,17 +57,11 @@ export async function getExecOutput(
   const originalStdErrListener = options?.listeners?.stderr
 
   const stdErrListener = (data: Buffer): void => {
-    stderr += stderrDecoder.write(data)
-    if (originalStdErrListener) {
-      originalStdErrListener(data)
-    }
+      throw new Error("STUB");
   }
 
   const stdOutListener = (data: Buffer): void => {
-    stdout += stdoutDecoder.write(data)
-    if (originalStdoutListener) {
-      originalStdoutListener(data)
-    }
+      throw new Error("STUB");
   }
 
   const listeners: ExecListeners = {

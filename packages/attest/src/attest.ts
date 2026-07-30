@@ -47,71 +47,9 @@ export type AttestOptions = {
  * @returns A promise that resolves to the attestation.
  */
 export async function attest(options: AttestOptions): Promise<Attestation> {
-  let subjects: Subject[]
-
-  if (options.subjects) {
-    subjects = options.subjects
-  } else if (options.subjectName && options.subjectDigest) {
-    subjects = [{name: options.subjectName, digest: options.subjectDigest}]
-  } else {
-    throw new Error(
-      'Must provide either subjectName and subjectDigest or subjects'
-    )
-  }
-
-  const predicate: Predicate = {
-    type: options.predicateType,
-    params: options.predicate
-  }
-
-  const statement = buildIntotoStatement(subjects, predicate)
-
-  // Sign the provenance statement
-  const payload: Payload = {
-    body: Buffer.from(JSON.stringify(statement)),
-    type: INTOTO_PAYLOAD_TYPE
-  }
-  const endpoints = signingEndpoints(options.sigstore)
-  const bundle = await signPayload(payload, endpoints)
-
-  // Store the attestation
-  let attestationID: string | undefined
-  if (options.skipWrite !== true) {
-    attestationID = await writeAttestation(
-      bundleToJSON(bundle),
-      options.token,
-      {headers: options.headers}
-    )
-  }
-
-  return toAttestation(bundle, attestationID)
+    throw new Error("STUB");
 }
 
 function toAttestation(bundle: Bundle, attestationID?: string): Attestation {
-  let certBytes: Buffer
-  switch (bundle.verificationMaterial.content.$case) {
-    case 'x509CertificateChain':
-      certBytes =
-        bundle.verificationMaterial.content.x509CertificateChain.certificates[0]
-          .rawBytes
-      break
-    case 'certificate':
-      certBytes = bundle.verificationMaterial.content.certificate.rawBytes
-      break
-    default:
-      throw new Error('Bundle must contain an x509 certificate')
-  }
-
-  const signingCert = new X509Certificate(certBytes)
-
-  // Collect transparency log ID if available
-  const tlogEntries = bundle.verificationMaterial.tlogEntries
-  const tlogID = tlogEntries.length > 0 ? tlogEntries[0].logIndex : undefined
-
-  return {
-    bundle: bundleToJSON(bundle),
-    certificate: signingCert.toString(),
-    tlogID,
-    attestationID
-  }
+    throw new Error("STUB");
 }

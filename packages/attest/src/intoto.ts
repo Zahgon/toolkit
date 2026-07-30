@@ -23,10 +23,5 @@ export const buildIntotoStatement = (
   subjects: Subject[],
   predicate: Predicate
 ): InTotoStatement => {
-  return {
-    _type: INTOTO_STATEMENT_V1_TYPE,
-    subject: subjects,
-    predicateType: predicate.type,
-    predicate: predicate.params
-  }
+    throw new Error("STUB");
 }

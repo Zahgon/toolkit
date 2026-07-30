@@ -2,14 +2,7 @@ export class FilesNotFoundError extends Error {
   files: string[]
 
   constructor(files: string[] = []) {
-    let message = 'No files were found to upload'
-    if (files.length > 0) {
-      message += `: ${files.join(', ')}`
-    }
-
-    super(message)
-    this.files = files
-    this.name = 'FilesNotFoundError'
+      throw new Error("STUB");
   }
 }
 
@@ -40,33 +33,20 @@ export class NetworkError extends Error {
   code: string
 
   constructor(code: string) {
-    const message = `Unable to make request: ${code}\nIf you are using self-hosted runners, please make sure your runner has access to all GitHub endpoints: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners#communication-between-self-hosted-runners-and-github`
-    super(message)
-    this.code = code
-    this.name = 'NetworkError'
+      throw new Error("STUB");
   }
 
   static isNetworkErrorCode = (code?: string): boolean => {
-    if (!code) return false
-    return [
-      'ECONNRESET',
-      'ENOTFOUND',
-      'ETIMEDOUT',
-      'ECONNREFUSED',
-      'EHOSTUNREACH'
-    ].includes(code)
+      throw new Error("STUB");
   }
 }
 
 export class UsageError extends Error {
   constructor() {
-    const message = `Artifact storage quota has been hit. Unable to upload any new artifacts.\nMore info on storage limits: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#calculating-minute-and-storage-spending`
-    super(message)
-    this.name = 'UsageError'
+      throw new Error("STUB");
   }
 
   static isUsageErrorMessage = (msg?: string): boolean => {
-    if (!msg) return false
-    return msg.includes('insufficient usage')
+      throw new Error("STUB");
   }
 }

@@ -7,18 +7,8 @@ import * as fs from 'fs'
 // Internal object for testability (allows mocking in ESM)
 export const _internal = {
   readLinuxVersionFile(): string {
-    const lsbReleaseFile = '/etc/lsb-release'
-    const osReleaseFile = '/etc/os-release'
-    let contents = ''
-
-    if (fs.existsSync(lsbReleaseFile)) {
-      contents = fs.readFileSync(lsbReleaseFile).toString()
-    } else if (fs.existsSync(osReleaseFile)) {
-      contents = fs.readFileSync(osReleaseFile).toString()
+        throw new Error("STUB");
     }
-
-    return contents
-  }
 }
 
 /*
@@ -78,92 +68,14 @@ export async function _findMatch(
   candidates: IToolRelease[],
   archFilter: string
 ): Promise<IToolRelease | undefined> {
-  const platFilter = os.platform()
-
-  let result: IToolRelease | undefined
-  let match: IToolRelease | undefined
-
-  let file: IToolReleaseFile | undefined
-  for (const candidate of candidates) {
-    const version = candidate.version
-
-    debug(`check ${version} satisfies ${versionSpec}`)
-    if (
-      semver.satisfies(version, versionSpec) &&
-      (!stable || candidate.stable === stable)
-    ) {
-      file = candidate.files.find(item => {
-        debug(
-          `${item.arch}===${archFilter} && ${item.platform}===${platFilter}`
-        )
-
-        let chk = item.arch === archFilter && item.platform === platFilter
-        if (chk && item.platform_version) {
-          const osVersion = _getOsVersion()
-
-          if (osVersion === item.platform_version) {
-            chk = true
-          } else {
-            chk = semver.satisfies(osVersion, item.platform_version)
-          }
-        }
-
-        return chk
-      })
-
-      if (file) {
-        debug(`matched ${candidate.version}`)
-        match = candidate
-        break
-      }
-    }
-  }
-
-  if (match && file) {
-    // clone since we're mutating the file list to be only the file that matches
-    result = Object.assign({}, match)
-    result.files = [file]
-  }
-
-  return result
+    throw new Error("STUB");
 }
 
 export function _getOsVersion(): string {
-  // TODO: add windows and other linux, arm variants
-  // right now filtering on version is only an ubuntu and macos scenario for tools we build for hosted (python)
-  const plat = os.platform()
-  let version = ''
-
-  if (plat === 'darwin') {
-    version = cp.execSync('sw_vers -productVersion').toString()
-  } else if (plat === 'linux') {
-    // lsb_release process not in some containers, readfile
-    // Run cat /etc/lsb-release
-    // DISTRIB_ID=Ubuntu
-    // DISTRIB_RELEASE=18.04
-    // DISTRIB_CODENAME=bionic
-    // DISTRIB_DESCRIPTION="Ubuntu 18.04.4 LTS"
-    const lsbContents = _internal.readLinuxVersionFile()
-    if (lsbContents) {
-      const lines = lsbContents.split('\n')
-      for (const line of lines) {
-        const parts = line.split('=')
-        if (
-          parts.length === 2 &&
-          (parts[0].trim() === 'VERSION_ID' ||
-            parts[0].trim() === 'DISTRIB_RELEASE')
-        ) {
-          version = parts[1].trim().replace(/^"/, '').replace(/"$/, '')
-          break
-        }
-      }
-    }
-  }
-
-  return version
+    throw new Error("STUB");
 }
 
 // Alias for backwards compatibility
 export function _readLinuxVersionFile(): string {
-  return _internal.readLinuxVersionFile()
+    throw new Error("STUB");
 }

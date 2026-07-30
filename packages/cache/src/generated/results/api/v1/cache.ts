@@ -161,57 +161,19 @@ export interface GetCacheEntryDownloadURLResponse {
 class CreateCacheEntryRequest$Type extends MessageType<CreateCacheEntryRequest> {
     constructor() {
         super("github.actions.results.api.v1.CreateCacheEntryRequest", [
-            { no: 1, name: "metadata", kind: "message", T: () => CacheMetadata },
+            { no: 1, name: "metadata", kind: "message", T: () => { throw new Error("STUB"); } },
             { no: 2, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CreateCacheEntryRequest>): CreateCacheEntryRequest {
-        const message = { key: "", version: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<CreateCacheEntryRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateCacheEntryRequest): CreateCacheEntryRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* github.actions.results.entities.v1.CacheMetadata metadata */ 1:
-                    message.metadata = CacheMetadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
-                    break;
-                case /* string key */ 2:
-                    message.key = reader.string();
-                    break;
-                case /* string version */ 3:
-                    message.version = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: CreateCacheEntryRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* github.actions.results.entities.v1.CacheMetadata metadata = 1; */
-        if (message.metadata)
-            CacheMetadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string key = 2; */
-        if (message.key !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.key);
-        /* string version = 3; */
-        if (message.version !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.version);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -228,51 +190,13 @@ class CreateCacheEntryResponse$Type extends MessageType<CreateCacheEntryResponse
         ]);
     }
     create(value?: PartialMessage<CreateCacheEntryResponse>): CreateCacheEntryResponse {
-        const message = { ok: false, signedUploadUrl: "", message: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<CreateCacheEntryResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateCacheEntryResponse): CreateCacheEntryResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ok */ 1:
-                    message.ok = reader.bool();
-                    break;
-                case /* string signed_upload_url */ 2:
-                    message.signedUploadUrl = reader.string();
-                    break;
-                case /* string message */ 3:
-                    message.message = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: CreateCacheEntryResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ok = 1; */
-        if (message.ok !== false)
-            writer.tag(1, WireType.Varint).bool(message.ok);
-        /* string signed_upload_url = 2; */
-        if (message.signedUploadUrl !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.signedUploadUrl);
-        /* string message = 3; */
-        if (message.message !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.message);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -283,64 +207,20 @@ export const CreateCacheEntryResponse = new CreateCacheEntryResponse$Type();
 class FinalizeCacheEntryUploadRequest$Type extends MessageType<FinalizeCacheEntryUploadRequest> {
     constructor() {
         super("github.actions.results.api.v1.FinalizeCacheEntryUploadRequest", [
-            { no: 1, name: "metadata", kind: "message", T: () => CacheMetadata },
+            { no: 1, name: "metadata", kind: "message", T: () => { throw new Error("STUB"); } },
             { no: 2, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "size_bytes", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
             { no: 4, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<FinalizeCacheEntryUploadRequest>): FinalizeCacheEntryUploadRequest {
-        const message = { key: "", sizeBytes: "0", version: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<FinalizeCacheEntryUploadRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FinalizeCacheEntryUploadRequest): FinalizeCacheEntryUploadRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* github.actions.results.entities.v1.CacheMetadata metadata */ 1:
-                    message.metadata = CacheMetadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
-                    break;
-                case /* string key */ 2:
-                    message.key = reader.string();
-                    break;
-                case /* int64 size_bytes */ 3:
-                    message.sizeBytes = reader.int64().toString();
-                    break;
-                case /* string version */ 4:
-                    message.version = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: FinalizeCacheEntryUploadRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* github.actions.results.entities.v1.CacheMetadata metadata = 1; */
-        if (message.metadata)
-            CacheMetadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string key = 2; */
-        if (message.key !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.key);
-        /* int64 size_bytes = 3; */
-        if (message.sizeBytes !== "0")
-            writer.tag(3, WireType.Varint).int64(message.sizeBytes);
-        /* string version = 4; */
-        if (message.version !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.version);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -357,51 +237,13 @@ class FinalizeCacheEntryUploadResponse$Type extends MessageType<FinalizeCacheEnt
         ]);
     }
     create(value?: PartialMessage<FinalizeCacheEntryUploadResponse>): FinalizeCacheEntryUploadResponse {
-        const message = { ok: false, entryId: "0", message: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<FinalizeCacheEntryUploadResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FinalizeCacheEntryUploadResponse): FinalizeCacheEntryUploadResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ok */ 1:
-                    message.ok = reader.bool();
-                    break;
-                case /* int64 entry_id */ 2:
-                    message.entryId = reader.int64().toString();
-                    break;
-                case /* string message */ 3:
-                    message.message = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: FinalizeCacheEntryUploadResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ok = 1; */
-        if (message.ok !== false)
-            writer.tag(1, WireType.Varint).bool(message.ok);
-        /* int64 entry_id = 2; */
-        if (message.entryId !== "0")
-            writer.tag(2, WireType.Varint).int64(message.entryId);
-        /* string message = 3; */
-        if (message.message !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.message);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -412,64 +254,20 @@ export const FinalizeCacheEntryUploadResponse = new FinalizeCacheEntryUploadResp
 class GetCacheEntryDownloadURLRequest$Type extends MessageType<GetCacheEntryDownloadURLRequest> {
     constructor() {
         super("github.actions.results.api.v1.GetCacheEntryDownloadURLRequest", [
-            { no: 1, name: "metadata", kind: "message", T: () => CacheMetadata },
+            { no: 1, name: "metadata", kind: "message", T: () => { throw new Error("STUB"); } },
             { no: 2, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "restore_keys", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GetCacheEntryDownloadURLRequest>): GetCacheEntryDownloadURLRequest {
-        const message = { key: "", restoreKeys: [], version: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetCacheEntryDownloadURLRequest>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetCacheEntryDownloadURLRequest): GetCacheEntryDownloadURLRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* github.actions.results.entities.v1.CacheMetadata metadata */ 1:
-                    message.metadata = CacheMetadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
-                    break;
-                case /* string key */ 2:
-                    message.key = reader.string();
-                    break;
-                case /* repeated string restore_keys */ 3:
-                    message.restoreKeys.push(reader.string());
-                    break;
-                case /* string version */ 4:
-                    message.version = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: GetCacheEntryDownloadURLRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* github.actions.results.entities.v1.CacheMetadata metadata = 1; */
-        if (message.metadata)
-            CacheMetadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string key = 2; */
-        if (message.key !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.key);
-        /* repeated string restore_keys = 3; */
-        for (let i = 0; i < message.restoreKeys.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.restoreKeys[i]);
-        /* string version = 4; */
-        if (message.version !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.version);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**
@@ -486,51 +284,13 @@ class GetCacheEntryDownloadURLResponse$Type extends MessageType<GetCacheEntryDow
         ]);
     }
     create(value?: PartialMessage<GetCacheEntryDownloadURLResponse>): GetCacheEntryDownloadURLResponse {
-        const message = { ok: false, signedDownloadUrl: "", matchedKey: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetCacheEntryDownloadURLResponse>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetCacheEntryDownloadURLResponse): GetCacheEntryDownloadURLResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ok */ 1:
-                    message.ok = reader.bool();
-                    break;
-                case /* string signed_download_url */ 2:
-                    message.signedDownloadUrl = reader.string();
-                    break;
-                case /* string matched_key */ 3:
-                    message.matchedKey = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: GetCacheEntryDownloadURLResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ok = 1; */
-        if (message.ok !== false)
-            writer.tag(1, WireType.Varint).bool(message.ok);
-        /* string signed_download_url = 2; */
-        if (message.signedDownloadUrl !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.signedDownloadUrl);
-        /* string matched_key = 3; */
-        if (message.matchedKey !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.matchedKey);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**

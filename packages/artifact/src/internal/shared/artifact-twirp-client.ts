@@ -30,21 +30,7 @@ class ArtifactHttpClient implements Rpc {
     baseRetryIntervalMilliseconds?: number,
     retryMultiplier?: number
   ) {
-    const token = getRuntimeToken()
-    this.baseUrl = getResultsServiceUrl()
-    if (maxAttempts) {
-      this.maxAttempts = maxAttempts
-    }
-    if (baseRetryIntervalMilliseconds) {
-      this.baseRetryIntervalMilliseconds = baseRetryIntervalMilliseconds
-    }
-    if (retryMultiplier) {
-      this.retryMultiplier = retryMultiplier
-    }
-
-    this.httpClient = new HttpClient(userAgent, [
-      new BearerCredentialHandler(token)
-    ])
+      throw new Error("STUB");
   }
 
   // This function satisfies the Rpc interface. It is compatible with the JSON
@@ -62,7 +48,7 @@ class ArtifactHttpClient implements Rpc {
     }
     try {
       const {body} = await this.retryableRequest(async () =>
-        this.httpClient.post(url, JSON.stringify(data), headers)
+        { throw new Error("STUB"); }
       )
 
       return body
@@ -162,7 +148,7 @@ class ArtifactHttpClient implements Rpc {
   }
 
   async sleep(milliseconds: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
+    return new Promise(resolve => { throw new Error("STUB"); })
   }
 
   getExponentialRetryTimeMilliseconds(attempt: number): number {
@@ -188,11 +174,5 @@ export function internalArtifactTwirpClient(options?: {
   retryIntervalMs?: number
   retryMultiplier?: number
 }): ArtifactServiceClientJSON {
-  const client = new ArtifactHttpClient(
-    getUserAgentString(),
-    options?.maxAttempts,
-    options?.retryIntervalMs,
-    options?.retryMultiplier
-  )
-  return new ArtifactServiceClientJSON(client)
+    throw new Error("STUB");
 }

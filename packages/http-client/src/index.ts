@@ -74,10 +74,7 @@ const ExponentialBackoffTimeSlice = 5
 
 export class HttpClientError extends Error {
   constructor(message: string, statusCode: number) {
-    super(message)
-    this.name = 'HttpClientError'
-    this.statusCode = statusCode
-    Object.setPrototypeOf(this, HttpClientError.prototype)
+      throw new Error("STUB");
   }
 
   statusCode: number
@@ -92,36 +89,17 @@ export class HttpClientResponse {
   message: http.IncomingMessage
   async readBody(): Promise<string> {
     return new Promise<string>(async resolve => {
-      let output = Buffer.alloc(0)
-
-      this.message.on('data', (chunk: Buffer) => {
-        output = Buffer.concat([output, chunk])
-      })
-
-      this.message.on('end', () => {
-        resolve(output.toString())
-      })
+        throw new Error("STUB");
     })
   }
 
   async readBodyBuffer?(): Promise<Buffer> {
-    return new Promise<Buffer>(async resolve => {
-      const chunks: Buffer[] = []
-
-      this.message.on('data', (chunk: Buffer) => {
-        chunks.push(chunk)
-      })
-
-      this.message.on('end', () => {
-        resolve(Buffer.concat(chunks))
-      })
-    })
+      throw new Error("STUB");
   }
 }
 
 export function isHttps(requestUrl: string): boolean {
-  const parsedUrl: URL = new URL(requestUrl)
-  return parsedUrl.protocol === 'https:'
+    throw new Error("STUB");
 }
 
 export class HttpClient {
@@ -147,47 +125,14 @@ export class HttpClient {
     handlers?: ifm.RequestHandler[],
     requestOptions?: ifm.RequestOptions
   ) {
-    this.userAgent = this._getUserAgentWithOrchestrationId(userAgent)
-    this.handlers = handlers || []
-    this.requestOptions = requestOptions
-    if (requestOptions) {
-      if (requestOptions.ignoreSslError != null) {
-        this._ignoreSslError = requestOptions.ignoreSslError
-      }
-
-      this._socketTimeout = requestOptions.socketTimeout
-
-      if (requestOptions.allowRedirects != null) {
-        this._allowRedirects = requestOptions.allowRedirects
-      }
-
-      if (requestOptions.allowRedirectDowngrade != null) {
-        this._allowRedirectDowngrade = requestOptions.allowRedirectDowngrade
-      }
-
-      if (requestOptions.maxRedirects != null) {
-        this._maxRedirects = Math.max(requestOptions.maxRedirects, 0)
-      }
-
-      if (requestOptions.keepAlive != null) {
-        this._keepAlive = requestOptions.keepAlive
-      }
-
-      if (requestOptions.allowRetries != null) {
-        this._allowRetries = requestOptions.allowRetries
-      }
-
-      if (requestOptions.maxRetries != null) {
-        this._maxRetries = requestOptions.maxRetries
-      }
-    }
+      throw new Error("STUB");
   }
 
   async options(
     requestUrl: string,
     additionalHeaders?: http.OutgoingHttpHeaders
   ): Promise<HttpClientResponse> {
-    return this.request('OPTIONS', requestUrl, null, additionalHeaders || {})
+      throw new Error("STUB");
   }
 
   async get(
@@ -201,7 +146,7 @@ export class HttpClient {
     requestUrl: string,
     additionalHeaders?: http.OutgoingHttpHeaders
   ): Promise<HttpClientResponse> {
-    return this.request('DELETE', requestUrl, null, additionalHeaders || {})
+      throw new Error("STUB");
   }
 
   async post(
@@ -217,7 +162,7 @@ export class HttpClient {
     data: string,
     additionalHeaders?: http.OutgoingHttpHeaders
   ): Promise<HttpClientResponse> {
-    return this.request('PATCH', requestUrl, data, additionalHeaders || {})
+      throw new Error("STUB");
   }
 
   async put(
@@ -225,14 +170,14 @@ export class HttpClient {
     data: string,
     additionalHeaders?: http.OutgoingHttpHeaders
   ): Promise<HttpClientResponse> {
-    return this.request('PUT', requestUrl, data, additionalHeaders || {})
+      throw new Error("STUB");
   }
 
   async head(
     requestUrl: string,
     additionalHeaders?: http.OutgoingHttpHeaders
   ): Promise<HttpClientResponse> {
-    return this.request('HEAD', requestUrl, null, additionalHeaders || {})
+      throw new Error("STUB");
   }
 
   async sendStream(
@@ -241,7 +186,7 @@ export class HttpClient {
     stream: NodeJS.ReadableStream,
     additionalHeaders?: http.OutgoingHttpHeaders
   ): Promise<HttpClientResponse> {
-    return this.request(verb, requestUrl, stream, additionalHeaders)
+      throw new Error("STUB");
   }
 
   /**
@@ -269,23 +214,7 @@ export class HttpClient {
     obj: any,
     additionalHeaders: http.OutgoingHttpHeaders = {}
   ): Promise<ifm.TypedResponse<T>> {
-    const data: string = JSON.stringify(obj, null, 2)
-    additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(
-      additionalHeaders,
-      Headers.Accept,
-      MediaTypes.ApplicationJson
-    )
-    additionalHeaders[Headers.ContentType] =
-      this._getExistingOrDefaultContentTypeHeader(
-        additionalHeaders,
-        MediaTypes.ApplicationJson
-      )
-    const res: HttpClientResponse = await this.post(
-      requestUrl,
-      data,
-      additionalHeaders
-    )
-    return this._processResponse<T>(res, this.requestOptions)
+      throw new Error("STUB");
   }
 
   async putJson<T>(
@@ -293,23 +222,7 @@ export class HttpClient {
     obj: any,
     additionalHeaders: http.OutgoingHttpHeaders = {}
   ): Promise<ifm.TypedResponse<T>> {
-    const data: string = JSON.stringify(obj, null, 2)
-    additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(
-      additionalHeaders,
-      Headers.Accept,
-      MediaTypes.ApplicationJson
-    )
-    additionalHeaders[Headers.ContentType] =
-      this._getExistingOrDefaultContentTypeHeader(
-        additionalHeaders,
-        MediaTypes.ApplicationJson
-      )
-    const res: HttpClientResponse = await this.put(
-      requestUrl,
-      data,
-      additionalHeaders
-    )
-    return this._processResponse<T>(res, this.requestOptions)
+      throw new Error("STUB");
   }
 
   async patchJson<T>(
@@ -317,23 +230,7 @@ export class HttpClient {
     obj: any,
     additionalHeaders: http.OutgoingHttpHeaders = {}
   ): Promise<ifm.TypedResponse<T>> {
-    const data: string = JSON.stringify(obj, null, 2)
-    additionalHeaders[Headers.Accept] = this._getExistingOrDefaultHeader(
-      additionalHeaders,
-      Headers.Accept,
-      MediaTypes.ApplicationJson
-    )
-    additionalHeaders[Headers.ContentType] =
-      this._getExistingOrDefaultContentTypeHeader(
-        additionalHeaders,
-        MediaTypes.ApplicationJson
-      )
-    const res: HttpClientResponse = await this.patch(
-      requestUrl,
-      data,
-      additionalHeaders
-    )
-    return this._processResponse<T>(res, this.requestOptions)
+      throw new Error("STUB");
   }
 
   /**
@@ -456,11 +353,7 @@ export class HttpClient {
    * Needs to be called if keepAlive is set to true in request options.
    */
   dispose(): void {
-    if (this._agent) {
-      this._agent.destroy()
-    }
-
-    this._disposed = true
+      throw new Error("STUB");
   }
 
   /**
@@ -473,18 +366,7 @@ export class HttpClient {
     data: string | NodeJS.ReadableStream | null
   ): Promise<HttpClientResponse> {
     return new Promise<HttpClientResponse>((resolve, reject) => {
-      function callbackForResult(err?: Error, res?: HttpClientResponse): void {
-        if (err) {
-          reject(err)
-        } else if (!res) {
-          // If `err` is not passed, then `res` must be passed.
-          reject(new Error('Unknown error'))
-        } else {
-          resolve(res)
-        }
-      }
-
-      this.requestRawWithCallback(info, data, callbackForResult)
+        throw new Error("STUB");
     })
   }
 
@@ -517,28 +399,22 @@ export class HttpClient {
     const req: http.ClientRequest = info.httpModule.request(
       info.options,
       (msg: http.IncomingMessage) => {
-        const res: HttpClientResponse = new HttpClientResponse(msg)
-        handleResult(undefined, res)
+          throw new Error("STUB");
       }
     )
 
     let socket: net.Socket
     req.on('socket', sock => {
-      socket = sock
+        throw new Error("STUB");
     })
 
     // If we ever get disconnected, we want the socket to timeout eventually
     req.setTimeout(this._socketTimeout || 3 * 60000, () => {
-      if (socket) {
-        socket.end()
-      }
-      handleResult(new Error(`Request timeout: ${info.options.path}`))
+        throw new Error("STUB");
     })
 
     req.on('error', function (err) {
-      // err has statusCode property
-      // res should have headers
-      handleResult(err)
+        throw new Error("STUB");
     })
 
     if (data && typeof data === 'string') {
@@ -547,7 +423,7 @@ export class HttpClient {
 
     if (data && typeof data !== 'string') {
       data.on('close', function () {
-        req.end()
+          throw new Error("STUB");
       })
 
       data.pipe(req)
@@ -675,40 +551,7 @@ export class HttpClient {
     additionalHeaders: http.OutgoingHttpHeaders,
     _default: string
   ): string {
-    let clientHeader: string | undefined
-    if (this.requestOptions && this.requestOptions.headers) {
-      const headerValue = lowercaseKeys(this.requestOptions.headers)[
-        Headers.ContentType
-      ]
-      if (headerValue) {
-        if (typeof headerValue === 'number') {
-          clientHeader = String(headerValue)
-        } else if (Array.isArray(headerValue)) {
-          clientHeader = headerValue.join(', ')
-        } else {
-          clientHeader = headerValue
-        }
-      }
-    }
-
-    const additionalValue = additionalHeaders[Headers.ContentType]
-
-    // Return the first non-undefined value, converting numbers or arrays to strings if necessary
-    if (additionalValue !== undefined) {
-      if (typeof additionalValue === 'number') {
-        return String(additionalValue)
-      } else if (Array.isArray(additionalValue)) {
-        return additionalValue.join(', ')
-      } else {
-        return additionalValue
-      }
-    }
-
-    if (clientHeader !== undefined) {
-      return clientHeader
-    }
-
-    return _default
+      throw new Error("STUB");
   }
 
   private _getAgent(parsedUrl: URL): http.Agent {
@@ -817,21 +660,13 @@ export class HttpClient {
   }
 
   private _getUserAgentWithOrchestrationId(userAgent?: string): string {
-    const baseUserAgent = userAgent || 'actions/http-client'
-    const orchId = process.env['ACTIONS_ORCHESTRATION_ID']
-    if (orchId) {
-      // Sanitize the orchestration ID to ensure it contains only valid characters
-      // Valid characters: 0-9, a-z, _, -, .
-      const sanitizedId = orchId.replace(/[^a-z0-9_.-]/gi, '_')
-      return `${baseUserAgent} actions_orchestration_id/${sanitizedId}`
-    }
-    return baseUserAgent
+      throw new Error("STUB");
   }
 
   private async _performExponentialBackoff(retryNumber: number): Promise<void> {
     retryNumber = Math.min(ExponentialBackoffCeiling, retryNumber)
     const ms: number = ExponentialBackoffTimeSlice * Math.pow(2, retryNumber)
-    return new Promise(resolve => setTimeout(() => resolve(), ms))
+    return new Promise(resolve => { throw new Error("STUB"); })
   }
 
   private async _processResponse<T>(
@@ -839,76 +674,10 @@ export class HttpClient {
     options?: ifm.RequestOptions
   ): Promise<ifm.TypedResponse<T>> {
     return new Promise<ifm.TypedResponse<T>>(async (resolve, reject) => {
-      const statusCode = res.message.statusCode || 0
-
-      const response: ifm.TypedResponse<T> = {
-        statusCode,
-        result: null,
-        headers: {}
-      }
-
-      // not found leads to null obj returned
-      if (statusCode === HttpCodes.NotFound) {
-        resolve(response)
-      }
-
-      // get the result from the body
-
-      function dateTimeDeserializer(key: any, value: any): any {
-        if (typeof value === 'string') {
-          const a = new Date(value)
-          if (!isNaN(a.valueOf())) {
-            return a
-          }
-        }
-
-        return value
-      }
-
-      let obj: any
-      let contents: string | undefined
-
-      try {
-        contents = await res.readBody()
-        if (contents && contents.length > 0) {
-          if (options && options.deserializeDates) {
-            obj = JSON.parse(contents, dateTimeDeserializer)
-          } else {
-            obj = JSON.parse(contents)
-          }
-
-          response.result = obj
-        }
-
-        response.headers = res.message.headers
-      } catch (err) {
-        // Invalid resource (contents not json);  leaving result obj null
-      }
-
-      // note that 3xx redirects are handled by the http layer.
-      if (statusCode > 299) {
-        let msg: string
-
-        // if exception/error in body, attempt to get better error
-        if (obj && obj.message) {
-          msg = obj.message
-        } else if (contents && contents.length > 0) {
-          // it may be the case that the exception is in the body message as string
-          msg = contents
-        } else {
-          msg = `Failed request: (${statusCode})`
-        }
-
-        const err = new HttpClientError(msg, statusCode)
-        err.result = response.result
-
-        reject(err)
-      } else {
-        resolve(response)
-      }
+        throw new Error("STUB");
     })
   }
 }
 
 const lowercaseKeys = (obj: {[index: string]: any}): any =>
-  Object.keys(obj).reduce((c: any, k) => ((c[k.toLowerCase()] = obj[k]), c), {})
+  Object.keys(obj).reduce((c: any, k) => { throw new Error("STUB"); }, {})

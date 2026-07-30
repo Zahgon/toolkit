@@ -51,42 +51,12 @@ export async function createStorageRecord(
   retryAttempts?: number,
   headers?: RequestHeaders
 ): Promise<number[]> {
-  const retries = retryAttempts ?? DEFAULT_RETRY_COUNT
-  const octokit = github.getOctokit(token, {retry: {retries}}, retry)
-
-  const headersWithUserAgent = {
-    'User-Agent': getUserAgent(),
-    ...headers
-  }
-
-  try {
-    const response = await octokit.request(CREATE_STORAGE_RECORD_REQUEST, {
-      owner: github.context.repo.owner,
-      headers: headersWithUserAgent,
-      ...buildRequestParams(artifactOptions, packageRegistryOptions)
-    })
-
-    const data =
-      typeof response.data == 'string'
-        ? JSON.parse(response.data)
-        : response.data
-
-    return data?.storage_records.map((r: {id: number}) => r.id)
-  } catch (err) {
-    const message = err instanceof Error ? err.message : err
-    throw new Error(`Failed to persist storage record: ${message}`)
-  }
+    throw new Error("STUB");
 }
 
 function buildRequestParams(
   artifactOptions: ArtifactOptions,
   packageRegistryOptions: PackageRegistryOptions
 ): Record<string, unknown> {
-  const {registryUrl, artifactUrl, ...rest} = packageRegistryOptions
-  return {
-    ...artifactOptions,
-    registry_url: registryUrl,
-    artifact_url: artifactUrl,
-    ...rest
-  }
+    throw new Error("STUB");
 }

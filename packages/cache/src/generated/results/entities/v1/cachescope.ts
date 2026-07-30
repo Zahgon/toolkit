@@ -37,45 +37,13 @@ class CacheScope$Type extends MessageType<CacheScope> {
         ]);
     }
     create(value?: PartialMessage<CacheScope>): CacheScope {
-        const message = { scope: "", permission: "0" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<CacheScope>(this, message, value);
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CacheScope): CacheScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string scope */ 1:
-                    message.scope = reader.string();
-                    break;
-                case /* int64 permission */ 2:
-                    message.permission = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
+        throw new Error("STUB");
     }
     internalBinaryWrite(message: CacheScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string scope = 1; */
-        if (message.scope !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.scope);
-        /* int64 permission = 2; */
-        if (message.permission !== "0")
-            writer.tag(2, WireType.Varint).int64(message.permission);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
+        throw new Error("STUB");
     }
 }
 /**

@@ -35,41 +35,7 @@ export async function cp(
   dest: string,
   options: CopyOptions = {}
 ): Promise<void> {
-  const {force, recursive, copySourceDirectory} = readCopyOptions(options)
-
-  const destStat = (await ioUtil.exists(dest)) ? await ioUtil.stat(dest) : null
-  // Dest is an existing file, but not forcing
-  if (destStat && destStat.isFile() && !force) {
-    return
-  }
-
-  // If dest is an existing directory, should copy inside.
-  const newDest: string =
-    destStat && destStat.isDirectory() && copySourceDirectory
-      ? path.join(dest, path.basename(source))
-      : dest
-
-  if (!(await ioUtil.exists(source))) {
-    throw new Error(`no such file or directory: ${source}`)
-  }
-  const sourceStat = await ioUtil.stat(source)
-
-  if (sourceStat.isDirectory()) {
-    if (!recursive) {
-      throw new Error(
-        `Failed to copy. ${source} is a directory, but tried to copy without recursive flag.`
-      )
-    } else {
-      await cpDirRecursive(source, newDest, 0, force)
-    }
-  } else {
-    if (path.relative(source, newDest) === '') {
-      // a file cannot be copied to itself
-      throw new Error(`'${newDest}' and '${source}' are the same file`)
-    }
-
-    await copyFile(source, newDest, force)
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -84,24 +50,7 @@ export async function mv(
   dest: string,
   options: MoveOptions = {}
 ): Promise<void> {
-  if (await ioUtil.exists(dest)) {
-    let destExists = true
-    if (await ioUtil.isDirectory(dest)) {
-      // If dest is directory copy src into dest
-      dest = path.join(dest, path.basename(source))
-      destExists = await ioUtil.exists(dest)
-    }
-
-    if (destExists) {
-      if (options.force == null || options.force) {
-        await rmRF(dest)
-      } else {
-        throw new Error('Destination already exists')
-      }
-    }
-  }
-  await mkdirP(path.dirname(dest))
-  await ioUtil.rename(source, dest)
+    throw new Error("STUB");
 }
 
 /**
@@ -110,26 +59,7 @@ export async function mv(
  * @param inputPath path to remove
  */
 export async function rmRF(inputPath: string): Promise<void> {
-  if (ioUtil.IS_WINDOWS) {
-    // Check for invalid characters
-    // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
-    if (/[*"<>|]/.test(inputPath)) {
-      throw new Error(
-        'File path must not contain `*`, `"`, `<`, `>` or `|` on Windows'
-      )
-    }
-  }
-  try {
-    // note if path does not exist, error is silent
-    await ioUtil.rm(inputPath, {
-      force: true,
-      maxRetries: 3,
-      recursive: true,
-      retryDelay: 300
-    })
-  } catch (err) {
-    throw new Error(`File was unable to be removed ${err}`)
-  }
+    throw new Error("STUB");
 }
 
 /**
@@ -140,8 +70,7 @@ export async function rmRF(inputPath: string): Promise<void> {
  * @returns Promise<void>
  */
 export async function mkdirP(fsPath: string): Promise<void> {
-  ok(fsPath, 'a path argument must be provided')
-  await ioUtil.mkdir(fsPath, {recursive: true})
+    throw new Error("STUB");
 }
 
 /**
@@ -254,13 +183,7 @@ export async function findInPath(tool: string): Promise<string[]> {
 }
 
 function readCopyOptions(options: CopyOptions): Required<CopyOptions> {
-  const force = options.force == null ? true : options.force
-  const recursive = Boolean(options.recursive)
-  const copySourceDirectory =
-    options.copySourceDirectory == null
-      ? true
-      : Boolean(options.copySourceDirectory)
-  return {force, recursive, copySourceDirectory}
+    throw new Error("STUB");
 }
 
 async function cpDirRecursive(
@@ -269,29 +192,7 @@ async function cpDirRecursive(
   currentDepth: number,
   force: boolean
 ): Promise<void> {
-  // Ensure there is not a run away recursive copy
-  if (currentDepth >= 255) return
-  currentDepth++
-
-  await mkdirP(destDir)
-
-  const files: string[] = await ioUtil.readdir(sourceDir)
-
-  for (const fileName of files) {
-    const srcFile = `${sourceDir}/${fileName}`
-    const destFile = `${destDir}/${fileName}`
-    const srcFileStat = await ioUtil.lstat(srcFile)
-
-    if (srcFileStat.isDirectory()) {
-      // Recurse
-      await cpDirRecursive(srcFile, destFile, currentDepth, force)
-    } else {
-      await copyFile(srcFile, destFile, force)
-    }
-  }
-
-  // Change the mode for the newly created directory
-  await ioUtil.chmod(destDir, (await ioUtil.stat(sourceDir)).mode)
+    throw new Error("STUB");
 }
 
 // Buffered file copy
@@ -300,28 +201,5 @@ async function copyFile(
   destFile: string,
   force: boolean
 ): Promise<void> {
-  if ((await ioUtil.lstat(srcFile)).isSymbolicLink()) {
-    // unlink/re-link it
-    try {
-      await ioUtil.lstat(destFile)
-      await ioUtil.unlink(destFile)
-    } catch (e) {
-      // Try to override file permission
-      if (e.code === 'EPERM') {
-        await ioUtil.chmod(destFile, '0666')
-        await ioUtil.unlink(destFile)
-      }
-      // other errors = it doesn't exist, no work to do
-    }
-
-    // Copy over symlink
-    const symlinkFull: string = await ioUtil.readlink(srcFile)
-    await ioUtil.symlink(
-      symlinkFull,
-      destFile,
-      ioUtil.IS_WINDOWS ? 'junction' : null
-    )
-  } else if (!(await ioUtil.exists(destFile)) || force) {
-    await ioUtil.copyFile(srcFile, destFile)
-  }
+    throw new Error("STUB");
 }
